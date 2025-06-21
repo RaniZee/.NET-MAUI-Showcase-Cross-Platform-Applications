@@ -24,6 +24,7 @@
             Title="FlexLayout"
             ContentTemplate="{DataTemplate local:FlexLayoutDemoPage}"
             Route="FlexLayoutDemoPage" />
+        
     </FlyoutItem>
 
     <!-- НОВАЯ СТРАНИЦА -->
@@ -31,5 +32,9 @@
         Title="Chapter 4 Controls"
         ContentTemplate="{DataTemplate local:Chapter4ControlsPage}"
         Route="Chapter4ControlsPage" />
+    <ShellContent
+            Title="Data Binding"
+            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
+            Route="DataBindingDemoPage" />
 
 </Shell>
