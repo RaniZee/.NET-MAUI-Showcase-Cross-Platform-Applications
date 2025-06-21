@@ -6,48 +6,6 @@
     xmlns:local="clr-namespace:HelloMauiApp"
     Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home (Original MainPage)"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
-    <FlyoutItem Title="Layout Demos" FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent
-            Title="StackLayout"
-            ContentTemplate="{DataTemplate local:StackLayoutDemoPage}"
-            Route="StackLayoutDemoPage" />
-        <ShellContent
-            Title="Grid"
-            ContentTemplate="{DataTemplate local:GridDemoPage}"
-            Route="GridDemoPage" />
-        <ShellContent
-            Title="FlexLayout"
-            ContentTemplate="{DataTemplate local:FlexLayoutDemoPage}"
-            Route="FlexLayoutDemoPage" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent
-            Title="Data Binding"
-            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
-            Route="DataBindingDemoPage" />
-        <ShellContent
-            Title="Styles"
-            ContentTemplate="{DataTemplate local:StylesDemoPage}"
-            Route="StylesDemoPage" />
-        <ShellContent
-            Title="Resources"
-            ContentTemplate="{DataTemplate local:ResourcesDemoPage}"
-            Route="ResourcesDemoPage" />
-        <ShellContent
-            Title="Navigation"
-            ContentTemplate="{DataTemplate local:NavigationHomePage}"
-            Route="NavigationHomePage" />
-        <ShellContent
-            Title="Platform and Essentials"
-            ContentTemplate="{DataTemplate local:PlatformDemoPage}"
-            Route="PlatformDemoPage" />
-    </FlyoutItem>
     <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
             Title="Data Binding"
@@ -73,5 +31,10 @@
             Title="Dialogs"
             ContentTemplate="{DataTemplate local:DialogsDemoPage}"
             Route="DialogsDemoPage" />
+        <ShellContent
+            Title="Graphics"
+            ContentTemplate="{DataTemplate local:GraphicsDemoPage}"
+            Route="GraphicsDemoPage" />
     </FlyoutItem>
+
 </Shell>

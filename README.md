@@ -74,9 +74,9 @@
     *   Обзор: [`/Reports/Report-Chapter-10.docx`](./Reports/Report-Chapter-10.docx)
     *   Ключевые моменты: `DisplayAlert` (простой и с подтверждением), `DisplayActionSheet`, `DisplayPromptAsync`, продемонстрированы на `DialogsDemoPage`.
 *   **Глава 11: Графика (Graphics)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: Microsoft.Maui.Graphics, рисование фигур, путей, изображений.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-11.docx`](./Reports/Report-Chapter-11.docx)
+    *   Ключевые моменты: `Microsoft.Maui.Graphics`, `GraphicsView`, `IDrawable`, `ICanvas`, рисование фигур (линии, прямоугольники, эллипсы, дуги, пути), работа с текстом и цветами, продемонстрированы на `GraphicsDemoPage`.
 *   **Глава 12: Жесты (Gestures)**
     *   Статус: *Планируется*
     *   Обзор: (ссылка будет добавлена)
