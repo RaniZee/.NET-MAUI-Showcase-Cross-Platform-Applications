@@ -51,7 +51,7 @@
     *   Ключевые моменты: Label, Entry, Editor, Button, ImageButton, CheckBox, RadioButton, BoxView, Frame, Border, Image, WebView, Picker, DatePicker, TimePicker, Switch, Slider, Stepper, ProgressBar, ActivityIndicator, SearchBar, CollectionView, RefreshView, SwipeView. Демонстрация на единой странице `Chapter4ControlsPage`.
 *   **Глава 5: Привязка данных (Data Binding)**
     *   Статус: *Реализовано*
-    *   Обзор: (ссылка будет добавлена, когда напишете Report-Chapter-5.docx)
+    *   Обзор: [`/Reports/Report-Chapter-5.docx`](./Reports/Report-Chapter-5.docx)
     *   Ключевые моменты: INotifyPropertyChanged, BindingContext, режимы привязки (OneWay, TwoWay, OneTime), ICommand, CommandParameter, StringFormat, продемонстрированы с SimpleViewModel на `DataBindingDemoPage`.
 *   **Глава 6: Стили (Styles)**
     *   Статус: *Планируется*
