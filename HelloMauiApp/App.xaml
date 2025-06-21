@@ -10,6 +10,10 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <Color x:Key="AppAccentColor">#FF8C00</Color>
+            <x:String x:Key="GlobalAppName">My MAUI App</x:String>
+            <x:Double x:Key="DefaultFontSize">16</x:Double>
+
             <Style x:Key="GlobalButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
                 <Setter Property="TextColor" Value="White"/>
