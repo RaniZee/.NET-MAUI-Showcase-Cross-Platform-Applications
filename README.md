@@ -70,9 +70,9 @@
     *   Обзор: [`/Reports/Report-Chapter-9.docx`](./Reports/Report-Chapter-9.docx)
     *   Ключевые моменты: Условная компиляция (`#if`), частичные классы (partial classes), .NET MAUI Essentials (`DeviceInfo`, `AppInfo`, `Connectivity`, `HapticFeedback`, `Share`, `Browser`), продемонстрированы на `PlatformDemoPage`.
 *   **Глава 10: Диалоги (Dialogs)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: DisplayAlert, DisplayActionSheet, DisplayPromptAsync.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-10.docx`](./Reports/Report-Chapter-10.docx)
+    *   Ключевые моменты: `DisplayAlert` (простой и с подтверждением), `DisplayActionSheet`, `DisplayPromptAsync`, продемонстрированы на `DialogsDemoPage`.
 *   **Глава 11: Графика (Graphics)**
     *   Статус: *Планируется*
     *   Обзор: (ссылка будет добавлена)
