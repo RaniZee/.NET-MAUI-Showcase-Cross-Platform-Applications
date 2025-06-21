@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.NavigationHomePage"
+             Title="Navigation Demo Home">
+    <VerticalStackLayout Spacing="15" Padding="20" VerticalOptions="Center">
+        <Label Text="Navigation Examples" FontSize="Title" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+        <Button Text="Go to Detail Page (PushAsync)" Clicked="GoToDetailPage_Clicked"/>
+        <Button Text="Go to Detail Page (Shell URI)" Clicked="GoToDetailPageShell_Clicked"/>
+        <Button Text="Open Modal Page" Clicked="OpenModalPage_Clicked"/>
+
+        <Label x:Name="ResultLabel" Text="Result from Detail Page will appear here." Margin="0,20,0,0" HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+</ContentPage>

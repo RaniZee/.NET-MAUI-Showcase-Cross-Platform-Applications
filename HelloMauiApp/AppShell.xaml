@@ -4,12 +4,72 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:HelloMauiApp"
-    Shell.FlyoutBehavior="Disabled"
-    Title="HelloMauiApp">
+    Shell.FlyoutBehavior="Flyout">
 
+    <!-- Стартовая страница, которая была по умолчанию -->
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
+    <!-- Группа для демонстрации основных компоновок -->
+    <FlyoutItem Title="Layouts (Ch. 3)" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="StackLayout"
+            ContentTemplate="{DataTemplate local:StackLayoutDemoPage}"
+            Route="StackLayoutDemoPage" />
+        <ShellContent
+            Title="Grid"
+            ContentTemplate="{DataTemplate local:GridDemoPage}"
+            Route="GridDemoPage" />
+        <ShellContent
+            Title="FlexLayout"
+            ContentTemplate="{DataTemplate local:FlexLayoutDemoPage}"
+            Route="FlexLayoutDemoPage" />
+    </FlyoutItem>
+
+    <!-- Группа для демонстрации основных концепций и элементов -->
+    <FlyoutItem Title="Core Concepts">
+        <ShellContent
+            Title="Controls (Ch. 4)"
+            ContentTemplate="{DataTemplate local:Chapter4ControlsPage}"
+            Route="Chapter4ControlsPage" />
+        <ShellContent
+            Title="Data Binding (Ch. 5)"
+            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
+            Route="DataBindingDemoPage" />
+        <ShellContent
+            Title="Styles (Ch. 6)"
+            ContentTemplate="{DataTemplate local:StylesDemoPage}"
+            Route="StylesDemoPage" />
+        <ShellContent
+            Title="Resources (Ch. 7)"
+            ContentTemplate="{DataTemplate local:ResourcesDemoPage}"
+            Route="ResourcesDemoPage" />
+    </FlyoutItem>
+
+    <!-- Группа для демонстрации продвинутых и платформенных возможностей -->
+    <FlyoutItem Title="Advanced and Platform">
+        <ShellContent
+            Title="Navigation (Ch. 8)"
+            ContentTemplate="{DataTemplate local:NavigationHomePage}"
+            Route="NavigationHomePage" />
+        <ShellContent
+            Title="Platform and Essentials (Ch. 9)"
+            ContentTemplate="{DataTemplate local:PlatformDemoPage}"
+            Route="PlatformDemoPage" />
+        <ShellContent
+            Title="Dialogs (Ch. 10)"
+            ContentTemplate="{DataTemplate local:DialogsDemoPage}"
+            Route="DialogsDemoPage" />
+        <ShellContent
+            Title="Graphics (Ch. 11)"
+            ContentTemplate="{DataTemplate local:GraphicsDemoPage}"
+            Route="GraphicsDemoPage" />
+        <ShellContent
+            Title="Gestures (Ch. 12)"
+            ContentTemplate="{DataTemplate local:GesturesDemoPage}"
+            Route="GesturesDemoPage" />
+    </FlyoutItem>
 
 </Shell>

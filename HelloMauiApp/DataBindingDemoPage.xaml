@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HelloMauiApp"       
+    x:Class="HelloMauiApp.DataBindingDemoPage"
+             Title="Data Binding Demo">
+
+    <ContentPage.BindingContext>
+        <local:SimpleViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="Data Binding Basics" Style="{StaticResource Headline}"/>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="OneWay Binding (Label):" FontAttributes="Bold"/>
+                    <Label Text="{Binding UserName}" FontSize="Large"/>
+                    <Label Text="{Binding Greeting}" FontSize="Medium" TextColor="Green"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray" Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="TwoWay Binding (Entry):" FontAttributes="Bold"/>
+                    <Entry Text="{Binding EntryText, Mode=TwoWay}" Placeholder="Enter text to update ViewModel"/>
+                    <Label Text="{Binding EntryText, StringFormat='Entry Text is: {0}'}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray" Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Slider Binding (TwoWay):" FontAttributes="Bold"/>
+                    <Slider Value="{Binding SliderValue}" Minimum="0" Maximum="1"/>
+                    <Label Text="{Binding SliderValueText}" HorizontalOptions="Center"/>
+                    <ProgressBar Progress="{Binding SliderValue}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray" Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Command Binding (Button):" FontAttributes="Bold"/>
+                    <Entry x:Name="NewNameEntry" Placeholder="Enter new name for greeting"/>
+                    <Button Text="Update Name from Entry" 
+                            Command="{Binding UpdateNameCommand}" 
+                            CommandParameter="{Binding Source={x:Reference NewNameEntry}, Path=Text}"/>
+
+                    <Button Text="Reset All" 
+                            Command="{Binding ResetNameCommand}"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray" Margin="0,10,0,0">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="OneTime Binding (Label):" FontAttributes="Bold"/>
+                    <Label Text="{Binding UserName, Mode=OneTime}" TextColor="Gray"/>
+                    <Label Text="(This label won't update if UserName changes after initial load)" FontSize="Small"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

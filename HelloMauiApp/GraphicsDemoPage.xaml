@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HelloMauiApp"
+             x:Class="HelloMauiApp.GraphicsDemoPage"
+             Title="Graphics Demo">
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="Demonstration of Microsoft.Maui.Graphics" Style="{StaticResource Headline}"/>
+
+            <Label Text="Drawing with a custom IDrawable class" FontSize="Large" FontAttributes="Bold"/>
+            <Frame Padding="10" BorderColor="LightGray" HeightRequest="500">
+                <GraphicsView>
+                    <GraphicsView.Drawable>
+                        <local:GraphicsDrawable/>
+                    </GraphicsView.Drawable>
+                </GraphicsView>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

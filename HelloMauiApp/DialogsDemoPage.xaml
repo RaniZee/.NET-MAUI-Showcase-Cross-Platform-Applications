@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.DialogsDemoPage"
+             Title="Dialogs Demo">
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="Demonstration of Dialogs" Style="{StaticResource Headline}"/>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="1. DisplayAlert" FontSize="Large" FontAttributes="Bold"/>
+                    <Button Text="Show Simple Alert" Clicked="ShowSimpleAlert_Clicked"/>
+                    <Button Text="Show Alert with Confirmation" Clicked="ShowConfirmationAlert_Clicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="2. DisplayActionSheet" FontSize="Large" FontAttributes="Bold"/>
+                    <Button Text="Show Action Sheet" Clicked="ShowActionSheet_Clicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="3. DisplayPromptAsync" FontSize="Large" FontAttributes="Bold"/>
+                    <Button Text="Show Prompt" Clicked="ShowPrompt_Clicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label x:Name="ResultLabel" Text="Result from dialog will appear here." Margin="0,20,0,0" HorizontalOptions="Center" FontSize="Medium"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.StackLayoutDemoPage"
+             Title="StackLayout Demo">
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+            <Label Text="VerticalStackLayout Example" FontSize="Large" HorizontalOptions="Center"/>
+
+            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Item 1" BackgroundColor="LightBlue" Padding="10"/>
+                    <Label Text="Item 2" BackgroundColor="LightCoral" Padding="10"/>
+                    <Label Text="Item 3" BackgroundColor="LightGoldenrodYellow" Padding="10"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="HorizontalStackLayout Example" FontSize="Large" HorizontalOptions="Center" Margin="0,20,0,0"/>
+            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+                <HorizontalStackLayout Spacing="5">
+                    <Label Text="Left" BackgroundColor="LightGreen" Padding="20,10"/>
+                    <Label Text="Center" BackgroundColor="LightPink" Padding="20,10"/>
+                    <Label Text="Right" BackgroundColor="LightSkyBlue" Padding="20,10"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Label Text="StackLayout (Vertical by default) with Spacing" FontSize="Large" HorizontalOptions="Center" Margin="0,20,0,0"/>
+            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+                <StackLayout Spacing="15">
+                    <BoxView Color="Red" HeightRequest="50" WidthRequest="100" HorizontalOptions="Center"/>
+                    <BoxView Color="Green" HeightRequest="50" WidthRequest="100" HorizontalOptions="Center"/>
+                    <BoxView Color="Blue" HeightRequest="50" WidthRequest="100" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <Label Text="StackLayout (Horizontal) with Alignment" FontSize="Large" HorizontalOptions="Center" Margin="0,20,0,0"/>
+            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray" HeightRequest="150">
+                <StackLayout Orientation="Horizontal" Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="Start" BackgroundColor="AliceBlue" VerticalOptions="Start" Padding="10"/>
+                    <Label Text="Center" BackgroundColor="AntiqueWhite" VerticalOptions="Center" Padding="10"/>
+                    <Label Text="End" BackgroundColor="Aqua" VerticalOptions="End" Padding="10"/>
+                    <Label Text="Fill" BackgroundColor="Aquamarine" VerticalOptions="Fill" Padding="10"/>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

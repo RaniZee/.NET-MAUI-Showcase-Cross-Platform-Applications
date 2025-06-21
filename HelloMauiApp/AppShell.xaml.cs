@@ -1,10 +1,11 @@
-﻿namespace HelloMauiApp
+﻿namespace HelloMauiApp;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        Routing.RegisterRoute(nameof(NavigationDetailPage), typeof(NavigationDetailPage));
     }
 }
