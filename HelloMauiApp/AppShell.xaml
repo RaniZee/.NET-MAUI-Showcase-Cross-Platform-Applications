@@ -36,5 +36,14 @@
             Title="Data Binding"
             ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
             Route="DataBindingDemoPage" />
-
+    <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="Data Binding"
+            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
+            Route="DataBindingDemoPage" />
+        <ShellContent
+            Title="Styles"
+            ContentTemplate="{DataTemplate local:StylesDemoPage}"
+            Route="StylesDemoPage" />
+    </FlyoutItem>
 </Shell>

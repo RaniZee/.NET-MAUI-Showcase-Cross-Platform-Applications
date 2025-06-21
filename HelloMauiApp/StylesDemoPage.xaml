@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.StylesDemoPage"
+             Title="Styles Demo">
+
+    <ContentPage.Resources>
+        <Style x:Key="PageHeaderLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Title"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <Style x:Key="SectionHeaderLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="Margin" Value="0,15,0,5"/>
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="AliceBlue"/>
+            <Setter Property="TextColor" Value="DarkSlateGray"/>
+            <Setter Property="PlaceholderColor" Value="LightSlateGray"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style x:Key="InheritedButtonStyle" TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}">
+            <Setter Property="BorderColor" Value="Yellow"/>
+            <Setter Property="BorderWidth" Value="2"/>
+            <Setter Property="TextColor" Value="DarkBlue"/>
+        </Style>
+
+        <Style x:Key="ErrorLabelClassStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="Red"/>
+            <Setter Property="FontAttributes" Value="Italic"/>
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+            <Label Text="Demonstration of Styles" Style="{StaticResource PageHeaderLabelStyle}"/>
+
+            <Label Text="1. Applying Global Style (from App.xaml)" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Button Text="Global Styled Button" Style="{StaticResource GlobalButtonStyle}" />
+
+            <Label Text="2. Applying Page-Level Explicit Style" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Button Text="Page Explicit Styled Button" Style="{StaticResource InheritedButtonStyle}" />
+            <Label Text="(This button inherits from GlobalButtonStyle and overrides TextColor)" FontSize="Small"/>
+
+            <Label Text="3. Implicit Style (for Entry)" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Entry Placeholder="This Entry uses implicit style" />
+            <Entry Placeholder="Another Entry, also implicitly styled" />
+            <Entry Placeholder="Entry with explicit style override" BackgroundColor="LightPink"/>
+
+            <Label Text="4. Style Inheritance (InheritedButtonStyle)" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Label Text="(See 'Page Explicit Styled Button' above - it's based on GlobalButtonStyle)"/>
+
+
+            <Label Text="5. Dynamic Styles (Not demonstrated here, but possible with DynamicResource)" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Label Text="DynamicResource allows styles to change at runtime." FontSize="Small"/>
+
+
+            <Label Text="6. Style Classes" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Label Text="This is a normal label."/>
+            <Label Text="This is an error label." StyleClass="ErrorLabelClassStyle" />
+            <Label Text="This label has default and error styles." StyleClass="DefaultLabelStyle, ErrorLabelClassStyle" />
+            <Label Text="This label ONLY uses ErrorLabelClassStyle" Style="{StaticResource ErrorLabelClassStyle}" />
+            <Label Text="Or apply class directly (less common for full styles)" >
+                <Label.StyleClass>
+                    <x:String>ErrorLabelClassStyle</x:String>
+                </Label.StyleClass>
+            </Label>
+
+
+            <Label Text="7. Platform Specific Styles (via OnPlatform)" Style="{StaticResource SectionHeaderLabelStyle}"/>
+            <Button Text="Platform-Specific Button">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource GlobalButtonStyle}">
+                        <Setter Property="BackgroundColor">
+                            <OnPlatform x:TypeArguments="Color">
+                                <On Platform="Android" Value="LimeGreen"/>
+                                <On Platform="iOS" Value="OrangeRed"/>
+                                <On Platform="Windows" Value="DodgerBlue"/>
+                            </OnPlatform>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -54,9 +54,9 @@
     *   Обзор: [`/Reports/Report-Chapter-5.docx`](./Reports/Report-Chapter-5.docx)
     *   Ключевые моменты: INotifyPropertyChanged, BindingContext, режимы привязки (OneWay, TwoWay, OneTime), ICommand, CommandParameter, StringFormat, продемонстрированы с SimpleViewModel на `DataBindingDemoPage`.
 *   **Глава 6: Стили (Styles)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: Явные и неявные стили, наследование, классы стилей, темы.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-6.docx`](./Reports/Report-Chapter-6.docx)
+    *   Ключевые моменты: Явные и неявные стили, наследование (`BasedOn`), `StaticResource`, `DynamicResource` (упомянуто), классы стилей (`StyleClass`), платформо-зависимые стили (`OnPlatform`), продемонстрированы на `StylesDemoPage`.
 *   **Глава 7: Ресурсы (Resources)**
     *   Статус: *Планируется*
     *   Обзор: (ссылка будет добавлена)
