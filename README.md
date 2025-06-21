@@ -62,9 +62,9 @@
     *   Обзор: [`/Reports/Report-Chapter-7.docx`](./Reports/Report-Chapter-7.docx)
     *   Ключевые моменты: Определение и использование ресурсов на уровне приложения и страницы, `StaticResource`, `DynamicResource`, словари ресурсов, переопределение ресурсов, продемонстрированы на `ResourcesDemoPage`.
 *   **Глава 8: Навигация (Navigation)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: Стековая навигация, Shell, передача данных между страницами.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-8.docx`](./Reports/Report-Chapter-8.docx)
+    *   Ключевые моменты: Стековая навигация (`PushAsync`, `PopAsync`), модальная навигация (`PushModalAsync`, `PopModalAsync`), Shell-навигация на основе URI (`GoToAsync`, `Routing.RegisterRoute`), передача данных между страницами (конструктор, `QueryProperty`, `MessagingCenter`), продемонстрированы на `NavigationHomePage`, `NavigationDetailPage`, `NavigationModalPage`.
 *   **Глава 9: Работа с платформозависимым кодом (Platform-specifics & Essentials)**
     *   Статус: *Планируется*
     *   Обзор: (ссылка будет добавлена)
