@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.FlexLayoutDemoPage"
+             Title="FlexLayout Demo">
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="10">
+            <Label Text="FlexLayout Direction=Row, Wrap=Wrap" FontSize="Medium" HorizontalOptions="Center"/>
+            <Frame BorderColor="LightGray" Padding="5">
+                <FlexLayout Direction="Row" Wrap="Wrap" AlignItems="Start" JustifyContent="SpaceAround">
+                    <Label Text="Item 1" BackgroundColor="LightBlue" Padding="10" Margin="5" WidthRequest="100"/>
+                    <Label Text="Item 2" BackgroundColor="LightCoral" Padding="10" Margin="5" WidthRequest="150"/>
+                    <Label Text="Item 3" BackgroundColor="LightGoldenrodYellow" Padding="10" Margin="5" WidthRequest="80"/>
+                    <Label Text="Item 4" BackgroundColor="LightGreen" Padding="10" Margin="5" WidthRequest="120"/>
+                    <Label Text="Item 5" BackgroundColor="LightPink" Padding="10" Margin="5" WidthRequest="90"/>
+                </FlexLayout>
+            </Frame>
+
+            <Label Text="FlexLayout Direction=Column, AlignItems=Center" FontSize="Medium" HorizontalOptions="Center" Margin="0,15,0,0"/>
+            <Frame BorderColor="LightGray" Padding="5" HeightRequest="250">
+                <FlexLayout Direction="Column" AlignItems="Center" JustifyContent="SpaceEvenly">
+                    <Button Text="Button A" WidthRequest="200"/>
+                    <Button Text="Button B" WidthRequest="150"/>
+                    <Button Text="Button C" WidthRequest="250"/>
+                </FlexLayout>
+            </Frame>
+
+            <Label Text="FlexLayout with FlexBasis, FlexGrow, FlexShrink" FontSize="Medium" HorizontalOptions="Center" Margin="0,15,0,0"/>
+            <Frame BorderColor="LightGray" Padding="5">
+                <FlexLayout Direction="Row" HeightRequest="100">
+                    <BoxView Color="CornflowerBlue" FlexLayout.Basis="150" FlexLayout.Grow="1" />
+                    <BoxView Color="DarkOrange" FlexLayout.Basis="100" FlexLayout.Grow="2" />
+                    <BoxView Color="SpringGreen" FlexLayout.Grow="1" />
+                </FlexLayout>
+            </Frame>
+            <Label Text="(CornflowerBlue: Basis=150, Grow=1. DarkOrange: Basis=100, Grow=2. SpringGreen: Basis=auto(0), Grow=1)" FontSize="Small" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

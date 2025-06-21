@@ -8,8 +8,8 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        // MainPage = new AppShell();
+        MainPage = new AppShell();
         //MainPage = new CodePage();
-        MainPage = new DynamicXamlPage();
+        //MainPage = new DynamicXamlPage();
     }
 }

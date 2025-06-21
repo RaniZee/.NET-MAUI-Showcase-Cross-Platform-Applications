@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.GridDemoPage"
+             Title="Grid Demo">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="10">
+
+            <Label Text="Simple 2x2 Grid" FontSize="Large" HorizontalOptions="Center"/>
+            <Grid RowSpacing="5" ColumnSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Text="(0,0)" BackgroundColor="LightBlue" Padding="20" HorizontalTextAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="(0,1)" BackgroundColor="LightCoral" Padding="20" HorizontalTextAlignment="Center"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="(1,0)" BackgroundColor="LightGoldenrodYellow" Padding="20" HorizontalTextAlignment="Center"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="(1,1)" BackgroundColor="LightGreen" Padding="20" HorizontalTextAlignment="Center"/>
+            </Grid>
+
+            <Label Text="Grid with ColumnSpan and RowSpan" FontSize="Large" HorizontalOptions="Center" Margin="0,20,0,0"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="70" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <BoxView Grid.Row="0" Grid.Column="0" Color="Red" />
+                <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="Spans 2 Columns" BackgroundColor="LightGray" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+
+                <Label Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Text="Spans 2 Rows" BackgroundColor="LightSteelBlue" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+                <BoxView Grid.Row="1" Grid.Column="1" Color="Green" />
+                <BoxView Grid.Row="1" Grid.Column="2" Color="Blue" />
+                <BoxView Grid.Row="2" Grid.Column="1" Color="Orange" />
+                <BoxView Grid.Row="2" Grid.Column="2" Color="Purple" />
+            </Grid>
+
+            <Label Text="Calculator-like UI (simplified)" FontSize="Large" HorizontalOptions="Center" Margin="0,20,0,0"/>
+            <Grid ColumnSpacing="1" RowSpacing="1" BackgroundColor="Black">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Text="0" FontSize="48" TextColor="White" HorizontalTextAlignment="End" VerticalTextAlignment="Center" BackgroundColor="DarkSlateGray" Padding="0,0,20,0"/>
+
+                <Button Grid.Row="1" Grid.Column="0" Text="C" BackgroundColor="Gray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="1" Grid.Column="1" Text="+/-" BackgroundColor="Gray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="1" Grid.Column="2" Text="%" BackgroundColor="Gray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="1" Grid.Column="3" Text="/" BackgroundColor="Orange" TextColor="White" CornerRadius="0"/>
+
+                <Button Grid.Row="2" Grid.Column="0" Text="7" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="2" Grid.Column="1" Text="8" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="2" Grid.Column="2" Text="9" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="2" Grid.Column="3" Text="X" BackgroundColor="Orange" TextColor="White" CornerRadius="0"/>
+
+                <Button Grid.Row="3" Grid.Column="0" Text="4" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="3" Grid.Column="1" Text="5" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="3" Grid.Column="2" Text="6" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="3" Grid.Column="3" Text="-" BackgroundColor="Orange" TextColor="White" CornerRadius="0"/>
+
+                <Button Grid.Row="4" Grid.Column="0" Text="1" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="4" Grid.Column="1" Text="2" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="4" Grid.Column="2" Text="3" BackgroundColor="DarkGray" TextColor="White" CornerRadius="0"/>
+                <Button Grid.Row="4" Grid.Column="3" Text="+" BackgroundColor="Orange" TextColor="White" CornerRadius="0"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
