@@ -42,13 +42,13 @@
     *   Обзор: [`/Reports/Report-Chapter-2.docx`](./Reports/Report-Chapter-2.docx)
     *   Ключевые моменты: Синтаксис XAML, code-behind, создание UI программно, `LoadFromXaml`.
 *   **Глава 3: Компоновки (Layouts)**
-    *   Статус: *Планируется / В разработке*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: StackLayout, Grid, FlexLayout, AbsoluteLayout, RelativeLayout.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-3.docx`](./Reports/Report-Chapter-3.docx)
+    *   Ключевые моменты: StackLayout, Grid, FlexLayout. Демонстрация на отдельных страницах с навигацией через AppShell.
 *   **Глава 4: Элементы управления (Controls)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: Label, Button, Entry, Editor, Image, ListView, CollectionView и др.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-4.docx`](./Reports/Report-Chapter-4.docx)
+    *   Ключевые моменты: Label, Entry, Editor, Button, ImageButton, CheckBox, RadioButton, BoxView, Frame, Border, Image, WebView, Picker, DatePicker, TimePicker, Switch, Slider, Stepper, ProgressBar, ActivityIndicator, SearchBar, CollectionView, RefreshView, SwipeView. Демонстрация на единой странице `Chapter4ControlsPage`.
 *   **Глава 5: Привязка данных (Data Binding)**
     *   Статус: *Планируется*
     *   Обзор: (ссылка будет добавлена)

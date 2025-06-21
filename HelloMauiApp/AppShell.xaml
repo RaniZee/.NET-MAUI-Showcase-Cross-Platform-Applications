@@ -13,18 +13,23 @@
 
     <FlyoutItem Title="Layout Demos" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-            Title="StackLayout Demo"
+            Title="StackLayout"
             ContentTemplate="{DataTemplate local:StackLayoutDemoPage}"
             Route="StackLayoutDemoPage" />
         <ShellContent
-            Title="Grid Demo"
+            Title="Grid"
             ContentTemplate="{DataTemplate local:GridDemoPage}"
             Route="GridDemoPage" />
         <ShellContent
-            Title="FlexLayout Demo"
+            Title="FlexLayout"
             ContentTemplate="{DataTemplate local:FlexLayoutDemoPage}"
             Route="FlexLayoutDemoPage" />
     </FlyoutItem>
 
+    <!-- НОВАЯ СТРАНИЦА -->
+    <ShellContent
+        Title="Chapter 4 Controls"
+        ContentTemplate="{DataTemplate local:Chapter4ControlsPage}"
+        Route="Chapter4ControlsPage" />
 
 </Shell>

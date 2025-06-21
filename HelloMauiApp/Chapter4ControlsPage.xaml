@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.Chapter4ControlsPage"
+             Title="Chapter 4 Controls Demo">
+    <ScrollView x:Name="MainScrollView">
+        <VerticalStackLayout Spacing="15" Padding="20">
+
+            <Label Text="Demonstration of Controls - Chapter 4" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+
+            <Label Text="Section: Text Controls" Style="{StaticResource Headline}" Margin="0,0,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Label (Simple): This is a simple Label." />
+                    <Label FontSize="Medium">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Label (Formatted): You can " />
+                                <Span Text="mix " FontAttributes="Bold" TextColor="Red" />
+                                <Span Text="styles." TextDecorations="Underline"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label TextType="Html">
+                        <![CDATA[
+                        Label (HTML): <strong>Bold</strong> and <em>Italic</em>.
+                        ]]>
+                    </Label>
+                    <Entry Placeholder="Entry: Enter your name" TextChanged="Generic_TextChanged" Completed="Generic_Completed"/>
+                    <Entry Placeholder="Entry (Password):" IsPassword="True" />
+                    <Editor Placeholder="Editor: Enter multi-line text..." HeightRequest="100" AutoSize="TextChanges" TextChanged="Generic_TextChanged" Completed="Generic_Completed"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Section: Button Controls" Style="{StaticResource Headline}" Margin="0,20,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Button Text="Simple Button" Clicked="CommonControl_Clicked"/>
+                    <ImageButton Source="dotnet_bot.png" WidthRequest="40" HeightRequest="40" Aspect="AspectFit" Clicked="CommonControl_Clicked"/>
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <CheckBox x:Name="DemoCheckBox" CheckedChanged="DemoCheckBox_CheckedChanged"/>
+                        <Label Text="CheckBox" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <Label Text="RadioButton Group:"/>
+                    <RadioButton Content="Option Alpha" GroupName="MyGroup" Value="Alpha" CheckedChanged="DemoRadioButton_CheckedChanged"/>
+                    <RadioButton Content="Option Beta" GroupName="MyGroup" Value="Beta" IsChecked="True" CheckedChanged="DemoRadioButton_CheckedChanged"/>
+                    <RadioButton Content="Option Gamma" GroupName="MyGroup" Value="Gamma" CheckedChanged="DemoRadioButton_CheckedChanged"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Section: View Controls" Style="{StaticResource Headline}" Margin="0,20,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="BoxView:"/>
+                    <BoxView Color="CornflowerBlue" WidthRequest="100" HeightRequest="60"/>
+                    <Label Text="Frame (wrapping a Label):"/>
+                    <Frame Padding="15" CornerRadius="10" BorderColor="DarkGoldenrod" BackgroundColor="LightYellow" HasShadow="True">
+                        <Label Text="Text inside a Frame" HorizontalOptions="Center"/>
+                    </Frame>
+                    <Label Text="Border (wrapping an Entry):"/>
+                    <Border Stroke="OrangeRed" StrokeThickness="2" Padding="5" BackgroundColor="Transparent">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8"/>
+                        </Border.StrokeShape>
+                        <Entry Placeholder="Entry inside a Border"/>
+                    </Border>
+                    <Label Text="Image (local and URI):"/>
+                    <Image Source="dotnet_bot.png" HeightRequest="80" Aspect="AspectFit" SemanticProperties.Description="Dot Net Bot Image"/>
+                    <Image Source="https://aka.ms/campusplaceholder ২৩" HeightRequest="80" Aspect="AspectFill" SemanticProperties.Description="Placeholder campus image"/>
+                    <Label Text="WebView (may require internet permission):"/>
+                    <WebView Source="https://dotnet.microsoft.com/apps/maui" HeightRequest="200"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Section: Picker Controls" Style="{StaticResource Headline}" Margin="0,20,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Picker x:Name="DemoPicker" Title="Select a color" SelectedIndexChanged="DemoPicker_SelectedIndexChanged">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Red</x:String>
+                                <x:String>Green</x:String>
+                                <x:String>Blue</x:String>
+                                <x:String>Yellow</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <DatePicker x:Name="DemoDatePicker" DateSelected="DemoDatePicker_DateSelected"/>
+                    <TimePicker x:Name="DemoTimePicker" PropertyChanged="DemoTimePicker_PropertyChanged"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Section: Indicator Controls" Style="{StaticResource Headline}" Margin="0,20,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Switch:" VerticalOptions="Center"/>
+                        <Switch x:Name="DemoSwitch" IsToggled="True" Toggled="DemoSwitch_Toggled"/>
+                    </HorizontalStackLayout>
+                    <Label x:Name="SliderValueLabel" Text="Slider Value: 0.5"/>
+                    <Slider x:Name="DemoSlider" Minimum="0" Maximum="1" Value="0.5" ValueChanged="DemoSlider_ValueChanged"/>
+                    <Label x:Name="StepperValueLabel" Text="Stepper Value: 1"/>
+                    <Stepper x:Name="DemoStepper" Minimum="0" Maximum="10" Increment="1" Value="1" ValueChanged="DemoStepper_ValueChanged"/>
+                    <Label Text="ProgressBar (0.7):"/>
+                    <ProgressBar x:Name="DemoProgressBar" Progress="0.7" />
+                    <Label Text="ActivityIndicator (running):"/>
+                    <ActivityIndicator x:Name="DemoActivityIndicator" IsRunning="True" Color="HotPink"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Section: SearchBar" Style="{StaticResource Headline}" Margin="0,20,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <SearchBar Placeholder="Search items..." SearchButtonPressed="DemoSearchBar_SearchButtonPressed" TextChanged="DemoSearchBar_TextChanged"/>
+            </Frame>
+
+            <Label Text="Section: CollectionView, RefreshView, SwipeView" Style="{StaticResource Headline}" Margin="0,20,0,5"/>
+            <Frame Padding="10" BorderColor="LightGray" HeightRequest="300">
+                <RefreshView x:Name="DemoRefreshView" Refreshing="DemoRefreshView_Refreshing" Command="{Binding RefreshCommand}">
+                    <CollectionView x:Name="DemoCollectionView">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <SwipeView Threshold="200">
+                                    <SwipeView.LeftItems>
+                                        <SwipeItems Mode="Execute">
+                                            <SwipeItem Text="Favorite" BackgroundColor="LightGreen" Invoked="SwipeItem_Invoked_Favorite"/>
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems Mode="Execute">
+                                            <SwipeItem Text="Delete" BackgroundColor="LightPink" Invoked="SwipeItem_Invoked_Delete"/>
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+
+                                    <Frame Padding="10" Margin="5" BorderColor="LightSlateGray" CornerRadius="5" BackgroundColor="White">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Category}" FontSize="Small" TextColor="Gray" VerticalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </SwipeView>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+            </Frame>
+
+            <Label x:Name="EventOutputLabel" Text="Event Output will appear here." Margin="0,20,0,0" FontSize="Small" MaxLines="5" LineBreakMode="WordWrap"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
