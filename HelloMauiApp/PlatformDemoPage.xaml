@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.PlatformDemoPage"
+    Title="Platform Code and Essentials">
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="Platform Specifics and Essentials" Style="{StaticResource Headline}"/>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="1. Conditional Compilation" FontSize="Large" FontAttributes="Bold"/>
+                    <Label x:Name="ConditionalCompilationLabel" Text="Platform will be determined here."/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="2. Partial Classes" FontSize="Large" FontAttributes="Bold"/>
+                    <Label x:Name="PartialClassLabel" Text="Platform will be determined here."/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="3. .NET MAUI Essentials" FontSize="Large" FontAttributes="Bold"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="5" ColumnSpacing="10">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Device Model:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <Label Grid.Row="0" Grid.Column="1" x:Name="DeviceInfoModelLabel"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Platform:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1" x:Name="DeviceInfoPlatformLabel"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="App Version:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <Label Grid.Row="2" Grid.Column="1" x:Name="AppInfoVersionLabel"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Connectivity:" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1" x:Name="ConnectivityLabel"/>
+                    </Grid>
+
+                    <Button Text="Perform Haptic Feedback (Click)" Clicked="HapticFeedback_Clicked"/>
+                    <Button Text="Share Text" Clicked="ShareText_Clicked"/>
+                    <Button Text="Open MAUI Docs in Browser" Clicked="OpenBrowser_Clicked"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

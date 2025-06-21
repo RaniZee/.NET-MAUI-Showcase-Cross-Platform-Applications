@@ -4,68 +4,68 @@
              x:Class="HelloMauiApp.ResourcesDemoPage"
              Title="Resources Demo">
 
-    <ContentPage.Resources>
-        <Color x:Key="PageBackgroundColor">LightSteelBlue</Color>
-        <x:String x:Key="PageSpecificMessage">Welcome to the Resources Demo Page!</x:String>
-        <Thickness x:Key="StandardPadding" Left="10" Top="5" Right="10" Bottom="5"/>
+	<ContentPage.Resources>
+		<Color x:Key="PageBackgroundColor">LightSteelBlue</Color>
+		<x:String x:Key="PageSpecificMessage">Welcome to the Resources Demo Page!</x:String>
+		<Thickness x:Key="StandardPadding" Left="10" Top="5" Right="10" Bottom="5"/>
 
-        <Style x:Key="LocalLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
-            <Setter Property="TextColor" Value="{StaticResource AppAccentColor}" />
-        </Style>
-    </ContentPage.Resources>
+		<Style x:Key="LocalLabelStyle" TargetType="Label">
+			<Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
+			<Setter Property="TextColor" Value="{StaticResource AppAccentColor}" />
+		</Style>
+	</ContentPage.Resources>
 
-    <ContentPage.Background>
-        <StaticResource Key="PageBackgroundColor"/>
-    </ContentPage.Background>
+	<ContentPage.Background>
+		<StaticResource Key="PageBackgroundColor"/>
+	</ContentPage.Background>
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="15" Padding="20">
-            <Label Text="Demonstration of Resources" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
+	<ScrollView>
+		<VerticalStackLayout Spacing="15" Padding="20">
+			<Label Text="Demonstration of Resources" FontSize="Title" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,20"/>
 
-            <Label Text="1. Using Global Resources (from App.xaml)" FontSize="Large" FontAttributes="Bold"/>
-            <Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
-                <VerticalStackLayout>
-                    <Label Text="{StaticResource GlobalAppName}" FontSize="{StaticResource DefaultFontSize}" HorizontalOptions="Center"/>
-                    <Button Text="Global Styled Button (Uses Global Resource)" Style="{StaticResource GlobalButtonStyle}" Margin="0,10,0,0"/>
-                    <BoxView HeightRequest="30" Color="{StaticResource AppAccentColor}" Margin="0,10,0,0"/>
-                    <Label Text="The box above uses AppAccentColor" FontSize="Small" HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-            </Frame>
+			<Label Text="1. Using Global Resources (from App.xaml)" FontSize="Large" FontAttributes="Bold"/>
+			<Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
+				<VerticalStackLayout>
+					<Label Text="{StaticResource GlobalAppName}" FontSize="{StaticResource DefaultFontSize}" HorizontalOptions="Center"/>
+					<Button Text="Global Styled Button (Uses Global Resource)" Style="{StaticResource GlobalButtonStyle}" Margin="0,10,0,0"/>
+					<BoxView HeightRequest="30" Color="{StaticResource AppAccentColor}" Margin="0,10,0,0"/>
+					<Label Text="The box above uses AppAccentColor" FontSize="Small" HorizontalOptions="Center"/>
+				</VerticalStackLayout>
+			</Frame>
 
-            <Label Text="2. Using Page-Level Resources" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
-            <Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
-                <VerticalStackLayout>
-                    <Label Text="{StaticResource PageSpecificMessage}" Style="{StaticResource LocalLabelStyle}" HorizontalOptions="Center"/>
-                    <Label Text="This label also uses LocalLabelStyle (which uses global resources)." 
-                           Style="{StaticResource LocalLabelStyle}" 
-                           HorizontalOptions="Center" 
+			<Label Text="2. Using Page-Level Resources" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+			<Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
+				<VerticalStackLayout>
+					<Label Text="{StaticResource PageSpecificMessage}" Style="{StaticResource LocalLabelStyle}" HorizontalOptions="Center"/>
+					<Label Text="This label also uses LocalLabelStyle (which uses global resources)."
+                           Style="{StaticResource LocalLabelStyle}"
+                           HorizontalOptions="Center"
                            Margin="0,10,0,0"/>
-                </VerticalStackLayout>
-            </Frame>
+				</VerticalStackLayout>
+			</Frame>
 
-            <Label Text="3. Dynamic Resources" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
-            <Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
-                <VerticalStackLayout>
-                    <Label Text="This text color will change:" TextColor="{DynamicResource DynamicTextColor}" FontSize="{StaticResource DefaultFontSize}"/>
-                    <Button Text="Change DynamicTextColor to Green" Clicked="ChangeColorToGreen_Clicked"/>
-                    <Button Text="Change DynamicTextColor to Red" Clicked="ChangeColorToRed_Clicked"/>
-                </VerticalStackLayout>
-            </Frame>
+			<Label Text="3. Dynamic Resources" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+			<Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
+				<VerticalStackLayout>
+					<Label Text="This text color will change:" TextColor="{DynamicResource DynamicTextColor}" FontSize="{StaticResource DefaultFontSize}"/>
+					<Button Text="Change DynamicTextColor to Green" Clicked="ChangeColorToGreen_Clicked"/>
+					<Button Text="Change DynamicTextColor to Red" Clicked="ChangeColorToRed_Clicked"/>
+				</VerticalStackLayout>
+			</Frame>
 
-            <Label Text="4. Overriding Resources (Implicitly)" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
-            <Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
-                <VerticalStackLayout>
-                    <VerticalStackLayout.Resources>
-                        <x:Double x:Key="DefaultFontSize">24</x:Double>
-                        <Color x:Key="AppAccentColor">Purple</Color>
-                    </VerticalStackLayout.Resources>
-                    <Label Text="This label uses overridden DefaultFontSize." Style="{StaticResource LocalLabelStyle}" />
-                    <BoxView HeightRequest="30" Color="{StaticResource AppAccentColor}" Margin="0,10,0,0"/>
-                    <Label Text="The box above uses overridden AppAccentColor (Purple)" FontSize="Small" HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-            </Frame>
+			<Label Text="4. Overriding Resources (Implicitly)" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+			<Frame Padding="{StaticResource StandardPadding}" BorderColor="Gray">
+				<VerticalStackLayout>
+					<VerticalStackLayout.Resources>
+						<x:Double x:Key="DefaultFontSize">24</x:Double>
+						<Color x:Key="AppAccentColor">Purple</Color>
+					</VerticalStackLayout.Resources>
+					<Label Text="This label uses overridden DefaultFontSize." Style="{StaticResource LocalLabelStyle}" />
+					<BoxView HeightRequest="30" Color="{StaticResource AppAccentColor}" Margin="0,10,0,0"/>
+					<Label Text="The box above uses overridden AppAccentColor (Purple)" FontSize="Small" HorizontalOptions="Center"/>
+				</VerticalStackLayout>
+			</Frame>
 
-        </VerticalStackLayout>
-    </ScrollView>
+		</VerticalStackLayout>
+	</ScrollView>
 </ContentPage>

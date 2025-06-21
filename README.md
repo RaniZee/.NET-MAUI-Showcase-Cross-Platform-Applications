@@ -66,9 +66,9 @@
     *   Обзор: [`/Reports/Report-Chapter-8.docx`](./Reports/Report-Chapter-8.docx)
     *   Ключевые моменты: Стековая навигация (`PushAsync`, `PopAsync`), модальная навигация (`PushModalAsync`, `PopModalAsync`), Shell-навигация на основе URI (`GoToAsync`, `Routing.RegisterRoute`), передача данных между страницами (конструктор, `QueryProperty`, `MessagingCenter`), продемонстрированы на `NavigationHomePage`, `NavigationDetailPage`, `NavigationModalPage`.
 *   **Глава 9: Работа с платформозависимым кодом (Platform-specifics & Essentials)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: Условная компиляция, частичные классы, DependencyService, .NET MAUI Essentials.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-9.docx`](./Reports/Report-Chapter-9.docx)
+    *   Ключевые моменты: Условная компиляция (`#if`), частичные классы (partial classes), .NET MAUI Essentials (`DeviceInfo`, `AppInfo`, `Connectivity`, `HapticFeedback`, `Share`, `Browser`), продемонстрированы на `PlatformDemoPage`.
 *   **Глава 10: Диалоги (Dialogs)**
     *   Статус: *Планируется*
     *   Обзор: (ссылка будет добавлена)

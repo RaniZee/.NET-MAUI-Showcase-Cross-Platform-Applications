@@ -24,42 +24,8 @@
             Title="FlexLayout"
             ContentTemplate="{DataTemplate local:FlexLayoutDemoPage}"
             Route="FlexLayoutDemoPage" />
-        
     </FlyoutItem>
 
-    <!-- НОВАЯ СТРАНИЦА -->
-    <ShellContent
-        Title="Chapter 4 Controls"
-        ContentTemplate="{DataTemplate local:Chapter4ControlsPage}"
-        Route="Chapter4ControlsPage" />
-    <ShellContent
-            Title="Data Binding"
-            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
-            Route="DataBindingDemoPage" />
-    <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent
-            Title="Data Binding"
-            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
-            Route="DataBindingDemoPage" />
-        <ShellContent
-            Title="Styles"
-            ContentTemplate="{DataTemplate local:StylesDemoPage}"
-            Route="StylesDemoPage" />
-    </FlyoutItem>
-    <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent
-            Title="Data Binding"
-            ContentTemplate="{DataTemplate local:DataBindingDemoPage}"
-            Route="DataBindingDemoPage" />
-        <ShellContent
-            Title="Styles"
-            ContentTemplate="{DataTemplate local:StylesDemoPage}"
-            Route="StylesDemoPage" />
-        <ShellContent
-            Title="Resources"
-            ContentTemplate="{DataTemplate local:ResourcesDemoPage}"
-            Route="ResourcesDemoPage" />
-    </FlyoutItem>
     <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
             Title="Data Binding"
@@ -77,5 +43,10 @@
             Title="Navigation"
             ContentTemplate="{DataTemplate local:NavigationHomePage}"
             Route="NavigationHomePage" />
+        <ShellContent
+            Title="Platform and Essentials"
+            ContentTemplate="{DataTemplate local:PlatformDemoPage}"
+            Route="PlatformDemoPage" />
     </FlyoutItem>
+
 </Shell>
