@@ -78,9 +78,9 @@
     *   Обзор: [`/Reports/Report-Chapter-11.docx`](./Reports/Report-Chapter-11.docx)
     *   Ключевые моменты: `Microsoft.Maui.Graphics`, `GraphicsView`, `IDrawable`, `ICanvas`, рисование фигур (линии, прямоугольники, эллипсы, дуги, пути), работа с текстом и цветами, продемонстрированы на `GraphicsDemoPage`.
 *   **Глава 12: Жесты (Gestures)**
-    *   Статус: *Планируется*
-    *   Обзор: (ссылка будет добавлена)
-    *   Ключевые моменты: Tap, Pinch, Pan, Swipe.
+    *   Статус: *Реализовано*
+    *   Обзор: [`/Reports/Report-Chapter-12.docx`](./Reports/Report-Chapter-12.docx)
+    *   Ключевые моменты: Распознаватели жестов, `TapGestureRecognizer`, `PinchGestureRecognizer`, `PanGestureRecognizer`, `SwipeGestureRecognizer`, `PointerGestureRecognizer`, продемонстрированы на `GesturesDemoPage`.
 
 ## Прикладные проекты
 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.GesturesDemoPage"
+             Title="Gestures Demo">
+    <ScrollView>
+        <VerticalStackLayout Spacing="15" Padding="20">
+            <Label Text="Demonstration of Gestures" Style="{StaticResource Headline}"/>
+
+            <Label Text="1. Tap Gesture" FontSize="Large" FontAttributes="Bold"/>
+            <Frame Padding="10" BorderColor="LightGray">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Tap this Image (single tap)"/>
+                    <Image x:Name="SingleTapImage" Source="dotnet_bot.png" HeightRequest="80" HorizontalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSingleTap" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Label Text="Tap the area below TWICE (double tap)"/>
+                    <Frame x:Name="DoubleTapFrame" Padding="20" HorizontalOptions="Center" BackgroundColor="#333333">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDoubleTap" NumberOfTapsRequired="2"/>
+                        </Frame.GestureRecognizers>
+                        <Label Text="Double Tap Me!" FontSize="Medium"/>
+                    </Frame>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="2. Pinch Gesture (Zoom In/Out)" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+            <Frame Padding="10" BorderColor="LightGray" HeightRequest="150">
+                <Image x:Name="PinchImage" Source="dotnet_bot.png" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
+
+            <Label Text="3. Pan Gesture (Drag)" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+            <Frame Padding="10" BorderColor="LightGray" HeightRequest="150">
+                <AbsoluteLayout>
+                    <Image x:Name="PanImage" Source="dotnet_bot.png" HeightRequest="80" AbsoluteLayout.LayoutBounds="0.5,0.5,80,80" AbsoluteLayout.LayoutFlags="PositionProportional">
+                        <Image.GestureRecognizers>
+                            <PanGestureRecognizer PanUpdated="OnPanUpdated" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </AbsoluteLayout>
+            </Frame>
+
+            <Label Text="4. Swipe Gesture" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+            <Frame x:Name="SwipeContainer" Padding="20" BorderColor="LightGray" BackgroundColor="LightYellow" HeightRequest="100">
+                <Frame.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Left" Swiped="OnSwiped" />
+                    <SwipeGestureRecognizer Direction="Right" Swiped="OnSwiped" />
+                    <SwipeGestureRecognizer Direction="Up" Swiped="OnSwiped" />
+                    <SwipeGestureRecognizer Direction="Down" Swiped="OnSwiped" />
+                </Frame.GestureRecognizers>
+                <Label Text="Swipe in any direction here!" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Frame>
+
+            <Label Text="5. Pointer Gesture (Desktop - Hover)" FontSize="Large" FontAttributes="Bold" Margin="0,20,0,0"/>
+            <Frame Padding="20" BorderColor="LightGray" HeightRequest="100">
+                <Frame.GestureRecognizers>
+                    <PointerGestureRecognizer PointerEntered="OnPointerEntered"
+                                              PointerExited="OnPointerExited"
+                                              PointerMoved="OnPointerMoved" />
+                </Frame.GestureRecognizers>
+                <Label x:Name="PointerLabel" Text="Hover mouse over this area" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Frame>
+
+            <Label x:Name="EventOutputLabel" Text="Gesture Event Output will appear here." Margin="0,20,0,0" FontSize="Small" MaxLines="3" LineBreakMode="WordWrap"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

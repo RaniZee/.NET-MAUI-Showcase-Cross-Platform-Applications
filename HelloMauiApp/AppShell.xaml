@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:HelloMauiApp"
     Shell.FlyoutBehavior="Flyout">
 
+
     <FlyoutItem Title="Advanced Concepts" FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
             Title="Dialogs"
@@ -15,6 +16,10 @@
             Title="Graphics"
             ContentTemplate="{DataTemplate local:GraphicsDemoPage}"
             Route="GraphicsDemoPage" />
+        <ShellContent
+            Title="Gestures"
+            ContentTemplate="{DataTemplate local:GesturesDemoPage}"
+            Route="GesturesDemoPage" />
     </FlyoutItem>
 
 </Shell>
