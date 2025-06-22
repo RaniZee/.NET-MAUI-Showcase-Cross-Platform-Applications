@@ -18,14 +18,25 @@
                 <Editor Text="{Binding Task.Description}" Placeholder="Введите описание" AutoSize="TextChanges" HeightRequest="100" FontFamily="Bahnschrift"/>
 
                 <Label Text="Срок выполнения" FontFamily="Bahnschrift"/>
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="5">
                     <DatePicker Grid.Column="0" Date="{Binding SelectedDate, Mode=TwoWay}" FontFamily="Bahnschrift"/>
                     <TimePicker Grid.Column="1" Time="{Binding SelectedTime, Mode=TwoWay}" FontFamily="Bahnschrift" IsVisible="{Binding IsDateSelected}"/>
+                    <Button Grid.Column="2" Text="X" Command="{Binding ClearDueDateCommand}" FontSize="Small" IsVisible="{Binding IsDateSelected}" VerticalOptions="Center" Padding="5,0" MinimumWidthRequest="40"/>
                 </Grid>
 
-                <Button Text="Очистить дату" Command="{Binding ClearDueDateCommand}" HorizontalOptions="Start" FontSize="Small" Margin="0,5,0,0" IsVisible="{Binding IsDateSelected}"/>
-                
-                <Label Text="Приоритет" FontFamily="Bahnschrift"/>
+                <Label Text="Напомнить" Margin="0,10,0,0" FontFamily="Bahnschrift"/>
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="5">
+                    <DatePicker Grid.Column="0" Date="{Binding SelectedReminderDate, Mode=TwoWay}" FontFamily="Bahnschrift" IsEnabled="{Binding IsReminderDateSelected}"/>
+                    <TimePicker Grid.Column="1" Time="{Binding SelectedReminderTime, Mode=TwoWay}" FontFamily="Bahnschrift" IsVisible="{Binding IsReminderDateSelected}"/>
+                    <Button Grid.Column="2" Text="X" Command="{Binding ClearReminderDateTimeCommand}" FontSize="Small" IsVisible="{Binding IsReminderDateSelected}" VerticalOptions="Center" Padding="5,0" MinimumWidthRequest="40"/>
+                </Grid>
+                <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
+                    <Label Text="Включить напоминание:" VerticalOptions="Center" FontFamily="Bahnschrift"/>
+                    <Switch IsToggled="{Binding IsReminderDateSelected, Mode=TwoWay}" />
+                </HorizontalStackLayout>
+
+
+                <Label Text="Приоритет" Margin="0,10,0,0" FontFamily="Bahnschrift"/>
                 <Picker ItemsSource="{Binding PriorityOptions}"
                         SelectedItem="{Binding Task.Priority, Mode=TwoWay}"
                         ItemDisplayBinding="{Binding .}"

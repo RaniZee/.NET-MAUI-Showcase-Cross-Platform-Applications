@@ -1,6 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using SQLite;    
+using SQLite;
 
 namespace TaskTrackerMAUI.Models
 {
@@ -20,11 +21,11 @@ namespace TaskTrackerMAUI.Models
         Completed
     }
 
-    [Table("TaskItems")]    
+    [Table("TaskItems")]
     public class TaskItem : INotifyPropertyChanged
     {
         private int _id;
-        [PrimaryKey, AutoIncrement]     
+        [PrimaryKey, AutoIncrement]
         public int Id
         {
             get => _id;
@@ -50,6 +51,13 @@ namespace TaskTrackerMAUI.Models
         {
             get => _dueDate;
             set => SetProperty(ref _dueDate, value);
+        }
+
+        private DateTime? _reminderDateTime;      
+        public DateTime? ReminderDateTime
+        {
+            get => _reminderDateTime;
+            set => SetProperty(ref _reminderDateTime, value);
         }
 
         private Priority _priority;
@@ -95,6 +103,7 @@ namespace TaskTrackerMAUI.Models
             Title = string.Empty;
             Description = string.Empty;
             Category = string.Empty;
+            ReminderDateTime = null;     
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

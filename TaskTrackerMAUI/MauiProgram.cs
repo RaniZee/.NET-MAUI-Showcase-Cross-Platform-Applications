@@ -2,7 +2,8 @@
 using TaskTrackerMAUI.ViewModels;
 using TaskTrackerMAUI.Views;
 using TaskTrackerMAUI.Services;
-using TaskTrackerMAUI.Models;    
+using TaskTrackerMAUI.Models;
+using Plugin.LocalNotification;     
 
 namespace TaskTrackerMAUI
 {
@@ -18,18 +19,19 @@ namespace TaskTrackerMAUI
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("bahnschrift.ttf", "Bahnschrift");
-                });
+                })
+                .UseLocalNotification();     
 
             builder.Services.AddSingleton<IDataService, SQLiteDataService>();
-            builder.Services.AddSingleton<IThemeService, ThemeService>();   
+            builder.Services.AddSingleton<IThemeService, ThemeService>();
 
             builder.Services.AddSingleton<KanbanViewModel>();
             builder.Services.AddTransient<TaskDetailViewModel>();
-            builder.Services.AddTransient<SettingsViewModel>();      
+            builder.Services.AddTransient<SettingsViewModel>();
 
             builder.Services.AddSingleton<KanbanPage>();
             builder.Services.AddTransient<TaskDetailPage>();
-            builder.Services.AddTransient<SettingsPage>();      
+            builder.Services.AddTransient<SettingsPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
@@ -38,7 +40,6 @@ namespace TaskTrackerMAUI
 
             var themeService = app.Services.GetRequiredService<IThemeService>();
             themeService.InitializeTheme();
-
 
             return app;
         }
