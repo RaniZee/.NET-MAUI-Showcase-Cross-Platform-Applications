@@ -48,7 +48,9 @@ namespace TaskTrackerMAUI.ViewModels
         public TaskDetailViewModel(IDataService dataService, KanbanViewModel kanbanViewModel)
         {
             _dataService = dataService; _kanbanViewModel = kanbanViewModel; Title = "Загрузка...";
-            CategoryOptions = new ObservableCollection<Category>(); PriorityOptions = Enum.GetValues(typeof(Priority)).Cast<Priority>().ToList(); StatusOptions = Enum.GetValues(typeof(TaskStatus)).Cast<TaskStatus>().ToList();
+            CategoryOptions = new ObservableCollection<Category>();
+            PriorityOptions = Enum.GetValues(typeof(Priority)).Cast<Priority>().ToList();
+            StatusOptions = Enum.GetValues(typeof(TaskStatus)).Cast<TaskStatus>().ToList();
             SaveTaskCommand = new Command(async () => await OnSaveTaskAsync(), () => !IsBusy && Task != null); DeleteTaskCommand = new Command(async () => await OnDeleteTaskAsync(), CanExecuteDelete); ClearDueDateCommand = new Command(OnClearDueDate, () => (IsDateSelected) && !IsBusy); ClearReminderDateTimeCommand = new Command(OnClearReminderDateTime, () => (IsReminderDateSelected) && !IsBusy);
             _selectedDate = DateTime.Today; _selectedTime = TimeSpan.FromHours(DateTime.Now.Hour); _isDateSelected = false; _selectedReminderDate = DateTime.Today; _selectedReminderTime = TimeSpan.FromHours(DateTime.Now.Hour); _isReminderDateSelected = false;
         }

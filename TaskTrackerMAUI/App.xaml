@@ -12,7 +12,8 @@
 
             <converters:IntToBoolConverterForVisibility x:Key="IntToBoolConverterForVisibility" />
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
-
+            <converters:PriorityToStringConverter x:Key="PriorityToStringConverter" />
+            <converters:StatusToStringConverter x:Key="StatusToStringConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

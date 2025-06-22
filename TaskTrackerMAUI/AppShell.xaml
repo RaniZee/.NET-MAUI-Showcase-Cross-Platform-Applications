@@ -12,21 +12,28 @@
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
-    <FlyoutItem Title="Канбан-доска" Icon="{FontImage FontFamily=OpenSansSemibold, Glyph=}">
+    <FlyoutItem Title="Канбан-доска" Icon="dotnet_bot.png">
         <ShellContent
             Title="Канбан-доска"
             ContentTemplate="{DataTemplate views:KanbanPage}"
             Route="KanbanPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Напоминания" Icon="{FontImage FontFamily=OpenSansSemibold, Glyph=}">
+    <FlyoutItem Title="Календарь" Icon="dotnet_bot.png">
+        <ShellContent
+            Title="Календарь задач"
+            ContentTemplate="{DataTemplate views:CalendarPage}"
+            Route="CalendarPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Напоминания" Icon="dotnet_bot.png">
         <ShellContent
             Title="Запланированные напоминания"
             ContentTemplate="{DataTemplate views:NotificationsPage}"
             Route="NotificationsPage" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Настройки" Icon="{FontImage FontFamily=OpenSansSemibold, Glyph=}">
+    <FlyoutItem Title="Настройки" Icon="dotnet_bot.png">
         <ShellContent
             Title="Настройки"
             ContentTemplate="{DataTemplate views:SettingsPage}"

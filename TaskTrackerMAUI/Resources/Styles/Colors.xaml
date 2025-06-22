@@ -31,6 +31,8 @@
     <Color x:Key="WindowCaptionBackground">#202020</Color>
     <Color x:Key="DesktopUtilityBackground">#2B2B2B</Color>
 
+    <Color x:Key="OverdueTaskRed">#B71C1C</Color>
+
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>

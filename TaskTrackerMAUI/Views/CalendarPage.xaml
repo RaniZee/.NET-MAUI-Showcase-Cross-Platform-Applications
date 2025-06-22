@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskTrackerMAUI.ViewModels"
+             xmlns:models="clr-namespace:TaskTrackerMAUI.Models"
+             x:Class="TaskTrackerMAUI.Views.CalendarPage"
+             x:DataType="viewmodels:CalendarViewModel"
+             Title="{Binding Title}">
+
+    <Grid RowDefinitions="Auto,*">
+        <DatePicker Grid.Row="0"
+                    Date="{Binding SelectedDate, Mode=TwoWay}"
+                    HorizontalOptions="Center"
+                    Margin="10"/>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding TasksForSelectedDate}"
+                        SelectionMode="None">
+            <CollectionView.EmptyView>
+                <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="На выбранную дату нет задач." HorizontalTextAlignment="Center" FontSize="Medium"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:TaskItem">
+                    <Frame Padding="10" Margin="10,5" CornerRadius="5" BorderColor="Gray">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CalendarViewModel}}, Path=NavigateToTaskDetailCommand}" CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding Title}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Status, StringFormat='Статус: {0}'}" FontSize="Small"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding DueDate, StringFormat='{0:HH:mm}'}" VerticalOptions="Center" FontAttributes="Bold"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

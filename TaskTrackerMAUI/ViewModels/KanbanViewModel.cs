@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using TaskTrackerMAUI.Models;
 using TaskTrackerMAUI.Services;
+using TaskTrackerMAUI.Extensions;
 using TaskStatus = TaskTrackerMAUI.Models.TaskStatus;
 
 namespace TaskTrackerMAUI.ViewModels
@@ -50,7 +51,6 @@ namespace TaskTrackerMAUI.ViewModels
         private string _selectedSortOption;
         public string SelectedSortOption { get => _selectedSortOption; set { if (SetProperty(ref _selectedSortOption, value)) ApplyFiltersAndSort(); } }
 
-
         public KanbanViewModel(IDataService dataService)
         {
             _dataService = dataService;
@@ -62,14 +62,13 @@ namespace TaskTrackerMAUI.ViewModels
             CompletedTasks = new ObservableCollection<TaskItem>();
 
             CategoryFilterOptions = new ObservableCollection<Category>();
-
             PriorityFilterOptions = new ObservableCollection<PriorityDisplay>
             {
                 new PriorityDisplay { DisplayName = "Все приоритеты", Value = null }
             };
             foreach (Priority p in Enum.GetValues(typeof(Priority)))
             {
-                PriorityFilterOptions.Add(new PriorityDisplay { DisplayName = p.ToString(), Value = p });
+                PriorityFilterOptions.Add(new PriorityDisplay { DisplayName = p.ToRussianString(), Value = p });
             }
             _selectedPriorityFilter = PriorityFilterOptions.First();
 

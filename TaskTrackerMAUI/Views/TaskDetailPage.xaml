@@ -19,14 +19,14 @@
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="5">
                     <DatePicker Grid.Column="0" Date="{Binding SelectedDate, Mode=TwoWay}"/>
                     <TimePicker Grid.Column="1" Time="{Binding SelectedTime, Mode=TwoWay}" IsVisible="{Binding IsDateSelected}"/>
-                    <Button Grid.Column="2" Text="X" Command="{Binding ClearDueDateCommand}" IsVisible="{Binding IsDateSelected}" VerticalOptions="Center"/>
+                    <Button Grid.Column="2" Text="X" Command="{Binding ClearDueDateCommand}" IsVisible="{Binding IsDateSelected}" VerticalOptions="Center" Padding="5,0" MinimumWidthRequest="40"/>
                 </Grid>
 
                 <Label Text="Напомнить" Margin="0,10,0,0"/>
                 <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="5">
                     <DatePicker Grid.Column="0" Date="{Binding SelectedReminderDate, Mode=TwoWay}" IsEnabled="{Binding IsReminderDateSelected}"/>
                     <TimePicker Grid.Column="1" Time="{Binding SelectedReminderTime, Mode=TwoWay}" IsVisible="{Binding IsReminderDateSelected}"/>
-                    <Button Grid.Column="2" Text="X" Command="{Binding ClearReminderDateTimeCommand}" IsVisible="{Binding IsReminderDateSelected}" VerticalOptions="Center"/>
+                    <Button Grid.Column="2" Text="X" Command="{Binding ClearReminderDateTimeCommand}" IsVisible="{Binding IsReminderDateSelected}" VerticalOptions="Center" Padding="5,0" MinimumWidthRequest="40"/>
                 </Grid>
                 <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
                     <Label Text="Включить напоминание:" VerticalOptions="Center"/>
@@ -34,15 +34,21 @@
                 </HorizontalStackLayout>
 
                 <Label Text="Приоритет" Margin="0,10,0,0"/>
-                <Picker ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding Task.Priority, Mode=TwoWay}" ItemDisplayBinding="{Binding .}"/>
+                <Picker Title="Выберите приоритет" ItemsSource="{Binding PriorityOptions}" SelectedItem="{Binding Task.Priority, Mode=TwoWay}">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Converter="{StaticResource PriorityToStringConverter}"/>
+                    </Picker.ItemDisplayBinding>
+                </Picker>
 
                 <Label Text="Категория"/>
-                <Picker ItemsSource="{Binding CategoryOptions}" 
-                        ItemDisplayBinding="{Binding Name}"
-                        SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"/>
+                <Picker Title="Выберите категорию" ItemsSource="{Binding CategoryOptions}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"/>
 
                 <Label Text="Статус"/>
-                <Picker ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding Task.Status, Mode=TwoWay}" ItemDisplayBinding="{Binding .}"/>
+                <Picker Title="Выберите статус" ItemsSource="{Binding StatusOptions}" SelectedItem="{Binding Task.Status, Mode=TwoWay}">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Converter="{StaticResource StatusToStringConverter}"/>
+                    </Picker.ItemDisplayBinding>
+                </Picker>
 
                 <Button Text="Сохранить" Command="{Binding SaveTaskCommand}" Margin="0,20,0,0"/>
                 <Button Text="Удалить" Command="{Binding DeleteTaskCommand}" BackgroundColor="DarkRed" Margin="0,10,0,0" IsVisible="{Binding Task.Id, Converter={StaticResource IntToBoolConverterForVisibility}}" />
