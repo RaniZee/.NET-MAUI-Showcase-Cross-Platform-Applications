@@ -35,6 +35,7 @@ namespace TaskTrackerMAUI
             builder.Services.AddTransient<SettingsPage>();
             builder.Services.AddTransient<NotificationsPage>();
 
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

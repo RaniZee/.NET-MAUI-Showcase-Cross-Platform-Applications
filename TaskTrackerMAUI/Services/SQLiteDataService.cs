@@ -104,6 +104,22 @@ namespace TaskTrackerMAUI.Services
         public async Task<int> DeleteCategoryAsync(Category category)
         {
             await Init();
+
+            var defaultCategory = await _database.Table<Category>().Where(c => c.Name == "Без категории").FirstOrDefaultAsync();
+            if (defaultCategory == null)
+            {
+                defaultCategory = new Category { Name = "Без категории" };
+                await _database.InsertAsync(defaultCategory);
+            }
+
+            var tasksToUpdate = await _database.Table<TaskItem>().Where(t => t.CategoryId == category.Id).ToListAsync();
+
+            foreach (var task in tasksToUpdate)
+            {
+                task.CategoryId = defaultCategory.Id;
+                await _database.UpdateAsync(task);
+            }
+
             return await _database.DeleteAsync(category);
         }
     }
