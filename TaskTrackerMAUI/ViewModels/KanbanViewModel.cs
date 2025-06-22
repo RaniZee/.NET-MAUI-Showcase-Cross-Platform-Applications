@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;   
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using TaskTrackerMAUI.Models;
-using TaskTrackerMAUI.Services;
 using System.Diagnostics;
-using Microsoft.Maui.Controls;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Maui.Controls;
+using TaskTrackerMAUI.Models;
+using TaskTrackerMAUI.Services;
 using TaskStatus = TaskTrackerMAUI.Models.TaskStatus;
 
 namespace TaskTrackerMAUI.ViewModels
@@ -22,16 +22,12 @@ namespace TaskTrackerMAUI.ViewModels
         public ObservableCollection<TaskItem> CompletedTasks { get; set; }
 
         private List<TaskItem> _allTasksFromDb;
-
         private TaskItem _draggedTask;
         public TaskItem DraggedTask { get => _draggedTask; set => SetProperty(ref _draggedTask, value); }
 
         public ICommand NavigateToAddTaskCommand { get; }
         public ICommand NavigateToEditTaskCommand { get; }
-        public ICommand LoadTasksCommand { get; }
-        public ICommand NavigateToSettingsCommand { get; }
-        public ICommand NavigateToNotificationsCommand { get; }
-        public ICommand FilterTasksCommand { get; }      
+        public ICommand LoadDataCommand { get; }
 
         private bool _isBusy;
         public bool IsBusy { get => _isBusy; set => SetProperty(ref _isBusy, value); }
@@ -40,31 +36,20 @@ namespace TaskTrackerMAUI.ViewModels
         public string Title { get => _pageTitle; set => SetProperty(ref _pageTitle, value); }
 
         private string _searchText;
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                if (SetProperty(ref _searchText, value))
-                {
-                    ApplyFilters();
-                }
-            }
-        }
+        public string SearchText { get => _searchText; set { if (SetProperty(ref _searchText, value)) ApplyFiltersAndSort(); } }
 
-        public List<Priority?> PriorityFilterOptions { get; }      
-        private Priority? _selectedPriorityFilter;
-        public Priority? SelectedPriorityFilter
-        {
-            get => _selectedPriorityFilter;
-            set
-            {
-                if (SetProperty(ref _selectedPriorityFilter, value))
-                {
-                    ApplyFilters();
-                }
-            }
-        }
+        public ObservableCollection<Category> CategoryFilterOptions { get; }
+        private Category _selectedCategoryFilter;
+        public Category SelectedCategoryFilter { get => _selectedCategoryFilter; set { if (SetProperty(ref _selectedCategoryFilter, value)) ApplyFiltersAndSort(); } }
+
+        public ObservableCollection<PriorityDisplay> PriorityFilterOptions { get; }
+        private PriorityDisplay _selectedPriorityFilter;
+        public PriorityDisplay SelectedPriorityFilter { get => _selectedPriorityFilter; set { if (SetProperty(ref _selectedPriorityFilter, value)) ApplyFiltersAndSort(); } }
+
+        public List<string> SortOptions { get; }
+        private string _selectedSortOption;
+        public string SelectedSortOption { get => _selectedSortOption; set { if (SetProperty(ref _selectedSortOption, value)) ApplyFiltersAndSort(); } }
+
 
         public KanbanViewModel(IDataService dataService)
         {
@@ -76,63 +61,73 @@ namespace TaskTrackerMAUI.ViewModels
             OnReviewTasks = new ObservableCollection<TaskItem>();
             CompletedTasks = new ObservableCollection<TaskItem>();
 
-            PriorityFilterOptions = new List<Priority?> { null };  
-            PriorityFilterOptions.AddRange(Enum.GetValues(typeof(Priority)).Cast<Priority>().Select(p => (Priority?)p));
-            _selectedPriorityFilter = null;    
+            CategoryFilterOptions = new ObservableCollection<Category>();
+
+            PriorityFilterOptions = new ObservableCollection<PriorityDisplay>
+            {
+                new PriorityDisplay { DisplayName = "Все приоритеты", Value = null }
+            };
+            foreach (Priority p in Enum.GetValues(typeof(Priority)))
+            {
+                PriorityFilterOptions.Add(new PriorityDisplay { DisplayName = p.ToString(), Value = p });
+            }
+            _selectedPriorityFilter = PriorityFilterOptions.First();
+
+            SortOptions = new List<string> { "По дате создания", "По сроку выполнения", "По приоритету" };
+            SelectedSortOption = SortOptions.First();
 
             NavigateToAddTaskCommand = new Command(async () => await Shell.Current.GoToAsync($"{nameof(Views.TaskDetailPage)}?taskId=new"));
             NavigateToEditTaskCommand = new Command<TaskItem>(async (task) => { if (task != null) await Shell.Current.GoToAsync($"{nameof(Views.TaskDetailPage)}?taskId={task.Id}"); });
-            LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
-            NavigateToSettingsCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(Views.SettingsPage)));
-            NavigateToNotificationsCommand = new Command(async () => await Shell.Current.GoToAsync(nameof(Views.NotificationsPage)));
-            FilterTasksCommand = new Command(ApplyFilters);        
+            LoadDataCommand = new Command(async () => await ExecuteLoadDataCommand());
         }
 
-        async Task ExecuteLoadTasksCommand()
+        async Task ExecuteLoadDataCommand()
         {
             if (IsBusy) return;
             IsBusy = true;
-            Debug.WriteLine("[DEBUG] KanbanViewModel: Loading ALL tasks from database...");
             try
             {
+                CategoryFilterOptions.Clear();
+                CategoryFilterOptions.Add(new Category { Id = 0, Name = "Все категории" });
+                var categoriesFromDb = await _dataService.GetAllCategoriesAsync();
+                foreach (var cat in categoriesFromDb) CategoryFilterOptions.Add(cat);
+                SelectedCategoryFilter = CategoryFilterOptions.First();
+
                 _allTasksFromDb = await _dataService.GetAllTasksAsync() ?? new List<TaskItem>();
-                Debug.WriteLine($"[DEBUG] KanbanViewModel: Loaded {_allTasksFromDb.Count} total tasks from DB.");
-                ApplyFilters();       
+                ApplyFiltersAndSort();
             }
-            catch (Exception ex) { Debug.WriteLine($"[ERROR] KanbanViewModel: Failed to load tasks. {ex.Message}"); }
+            catch (Exception ex) { Debug.WriteLine($"[ERROR] Failed to load data. {ex.Message}"); }
             finally { IsBusy = false; }
         }
 
-        private void ApplyFilters()
+        private void ApplyFiltersAndSort()
         {
             if (_allTasksFromDb == null) return;
-            if (IsBusy) return;      
-
-            Debug.WriteLine($"[DEBUG] KanbanViewModel: Applying filters. Search: '{SearchText}', Priority: {SelectedPriorityFilter?.ToString() ?? "All"}");
-
-            IsBusy = true;           
-
             IEnumerable<TaskItem> filteredTasks = _allTasksFromDb;
 
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 string lowerSearchText = SearchText.ToLowerInvariant();
-                filteredTasks = filteredTasks.Where(t =>
-                    (t.Title?.ToLowerInvariant().Contains(lowerSearchText) ?? false) ||
-                    (t.Description?.ToLowerInvariant().Contains(lowerSearchText) ?? false));
+                filteredTasks = filteredTasks.Where(t => (t.Title?.ToLowerInvariant().Contains(lowerSearchText) ?? false) || (t.Description?.ToLowerInvariant().Contains(lowerSearchText) ?? false));
             }
-
-            if (SelectedPriorityFilter.HasValue)
+            if (SelectedPriorityFilter != null && SelectedPriorityFilter.Value.HasValue)
             {
-                filteredTasks = filteredTasks.Where(t => t.Priority == SelectedPriorityFilter.Value);
+                filteredTasks = filteredTasks.Where(t => t.Priority == SelectedPriorityFilter.Value.Value);
+            }
+            if (SelectedCategoryFilter != null && SelectedCategoryFilter.Id != 0)
+            {
+                filteredTasks = filteredTasks.Where(t => t.CategoryId == SelectedCategoryFilter.Id);
             }
 
-            NewTasks.Clear();
-            InProgressTasks.Clear();
-            OnReviewTasks.Clear();
-            CompletedTasks.Clear();
+            switch (SelectedSortOption)
+            {
+                case "По сроку выполнения": filteredTasks = filteredTasks.OrderBy(t => t.DueDate.HasValue ? 0 : 1).ThenBy(t => t.DueDate); break;
+                case "По приоритету": filteredTasks = filteredTasks.OrderByDescending(t => t.Priority); break;
+                case "По дате создания": default: filteredTasks = filteredTasks.OrderByDescending(t => t.CreatedDate); break;
+            }
 
-            foreach (var task in filteredTasks.ToList())      
+            NewTasks.Clear(); InProgressTasks.Clear(); OnReviewTasks.Clear(); CompletedTasks.Clear();
+            foreach (var task in filteredTasks.ToList())
             {
                 switch (task.Status)
                 {
@@ -142,8 +137,6 @@ namespace TaskTrackerMAUI.ViewModels
                     case TaskStatus.Completed: CompletedTasks.Add(task); break;
                 }
             }
-            Debug.WriteLine($"[DEBUG] KanbanViewModel: Filters applied. New: {NewTasks.Count}, InProg: {InProgressTasks.Count}, Review: {OnReviewTasks.Count}, Done: {CompletedTasks.Count}");
-            IsBusy = false;
         }
 
         public async Task MoveTaskAndSave(TaskItem taskToMove, TaskStatus newStatus)
@@ -151,46 +144,24 @@ namespace TaskTrackerMAUI.ViewModels
             if (taskToMove == null) { DraggedTask = null; return; }
             TaskStatus originalStatus = taskToMove.Status;
             if (originalStatus == newStatus) { DraggedTask = null; return; }
-
             var taskInAllList = _allTasksFromDb.FirstOrDefault(t => t.Id == taskToMove.Id);
-            if (taskInAllList != null)
-            {
-                taskInAllList.Status = newStatus;
-                taskInAllList.ModifiedDate = DateTime.Now;
-            }
-
+            if (taskInAllList != null) { taskInAllList.Status = newStatus; taskInAllList.ModifiedDate = DateTime.Now; }
             bool removedFromMemory = false;
-            switch (originalStatus)
-            {
-                case TaskStatus.New: removedFromMemory = NewTasks.Remove(taskToMove); break;
-                case TaskStatus.InProgress: removedFromMemory = InProgressTasks.Remove(taskToMove); break;
-                case TaskStatus.OnReview: removedFromMemory = OnReviewTasks.Remove(taskToMove); break;
-                case TaskStatus.Completed: removedFromMemory = CompletedTasks.Remove(taskToMove); break;
-            }
-
+            switch (originalStatus) { case TaskStatus.New: removedFromMemory = NewTasks.Remove(taskToMove); break; case TaskStatus.InProgress: removedFromMemory = InProgressTasks.Remove(taskToMove); break; case TaskStatus.OnReview: removedFromMemory = OnReviewTasks.Remove(taskToMove); break; case TaskStatus.Completed: removedFromMemory = CompletedTasks.Remove(taskToMove); break; }
             if (removedFromMemory)
             {
-                taskToMove.Status = newStatus;
-                taskToMove.ModifiedDate = DateTime.Now;
-
-                switch (newStatus)
-                {
-                    case TaskStatus.New: NewTasks.Add(taskToMove); break;
-                    case TaskStatus.InProgress: InProgressTasks.Add(taskToMove); break;
-                    case TaskStatus.OnReview: OnReviewTasks.Add(taskToMove); break;
-                    case TaskStatus.Completed: CompletedTasks.Add(taskToMove); break;
-                }
-
-                try
-                {
-                    await _dataService.SaveTaskAsync(taskToMove);
-                    Debug.WriteLine($"[DEBUG] MoveTaskAndSave: Task '{taskToMove.Title}' (ID: {taskToMove.Id}) saved to DB with new status {newStatus}.");
-                }
-                catch (Exception ex) { Debug.WriteLine($"[ERROR] MoveTaskAndSave: Failed to save moved task to DB. {ex.Message}"); }
+                taskToMove.Status = newStatus; taskToMove.ModifiedDate = DateTime.Now;
+                switch (newStatus) { case TaskStatus.New: NewTasks.Add(taskToMove); break; case TaskStatus.InProgress: InProgressTasks.Add(taskToMove); break; case TaskStatus.OnReview: OnReviewTasks.Add(taskToMove); break; case TaskStatus.Completed: CompletedTasks.Add(taskToMove); break; }
+                try { await _dataService.SaveTaskAsync(taskToMove); } catch (Exception ex) { Debug.WriteLine($"[ERROR] MoveTaskAndSave: Failed to save moved task. {ex.Message}"); }
             }
-            else { Debug.WriteLine($"[WARNING] MoveTaskAndSave: FAILED to remove task from memory collection. DB save skipped. This should not happen if DraggedTask was from one of the collections."); }
-
             DraggedTask = null;
         }
+    }
+
+    public class PriorityDisplay
+    {
+        public string DisplayName { get; set; }
+        public Priority? Value { get; set; }
+        public override string ToString() => DisplayName;
     }
 }

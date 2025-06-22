@@ -4,16 +4,33 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:TaskTrackerMAUI.Views"
-    Shell.FlyoutBehavior="Disabled"
     Title="TaskTrackerMAUI">
 
-    <ShellContent
-        Title="Канбан"
-        ContentTemplate="{DataTemplate views:KanbanPage}"
-        Route="KanbanPage" />
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout Padding="10" BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}">
+            <Label Text="Task Tracker" TextColor="White" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
 
-    <TabBar>
-        <ShellContent Route="TaskDetailPage" ContentTemplate="{DataTemplate views:TaskDetailPage}" />
-    </TabBar>
+    <FlyoutItem Title="Канбан-доска" Icon="{FontImage FontFamily=OpenSansSemibold, Glyph=}">
+        <ShellContent
+            Title="Канбан-доска"
+            ContentTemplate="{DataTemplate views:KanbanPage}"
+            Route="KanbanPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Напоминания" Icon="{FontImage FontFamily=OpenSansSemibold, Glyph=}">
+        <ShellContent
+            Title="Запланированные напоминания"
+            ContentTemplate="{DataTemplate views:NotificationsPage}"
+            Route="NotificationsPage" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Настройки" Icon="{FontImage FontFamily=OpenSansSemibold, Glyph=}">
+        <ShellContent
+            Title="Настройки"
+            ContentTemplate="{DataTemplate views:SettingsPage}"
+            Route="SettingsPage" />
+    </FlyoutItem>
 
 </Shell>
