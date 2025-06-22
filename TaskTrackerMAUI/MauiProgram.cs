@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using TaskTrackerMAUI.ViewModels;
 using TaskTrackerMAUI.Views;
-using TaskTrackerMAUI.Services;    
+using TaskTrackerMAUI.Services;
+using TaskTrackerMAUI.Models;    
 
 namespace TaskTrackerMAUI
 {
@@ -19,20 +20,27 @@ namespace TaskTrackerMAUI
                     fonts.AddFont("bahnschrift.ttf", "Bahnschrift");
                 });
 
-            builder.Services.AddSingleton<IDataService, SQLiteDataService>();    
+            builder.Services.AddSingleton<IDataService, SQLiteDataService>();
+            builder.Services.AddSingleton<IThemeService, ThemeService>();   
 
             builder.Services.AddSingleton<KanbanViewModel>();
             builder.Services.AddTransient<TaskDetailViewModel>();
+            builder.Services.AddTransient<SettingsViewModel>();      
 
             builder.Services.AddSingleton<KanbanPage>();
             builder.Services.AddTransient<TaskDetailPage>();
+            builder.Services.AddTransient<SettingsPage>();      
 
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
             var app = builder.Build();
 
-            return app;       
+            var themeService = app.Services.GetRequiredService<IThemeService>();
+            themeService.InitializeTheme();
+
+
+            return app;
         }
     }
 }

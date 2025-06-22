@@ -1,4 +1,4 @@
-﻿using TaskTrackerMAUI.Views;   
+﻿using TaskTrackerMAUI.Views;
 
 namespace TaskTrackerMAUI;
 
@@ -9,5 +9,6 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         Routing.RegisterRoute(nameof(TaskDetailPage), typeof(TaskDetailPage));
+        Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));   
     }
 }

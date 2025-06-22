@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using System.Windows.Input;   
 using TaskTrackerMAUI.Models;
 using TaskTrackerMAUI.Services;   
-using System.Diagnostics;
-using Microsoft.Maui.Controls;
-using System.Linq;
+using System.Diagnostics;   
+using Microsoft.Maui.Controls;   
+using System.Linq;     
 using System.Threading.Tasks;
 using TaskStatus = TaskTrackerMAUI.Models.TaskStatus;   
 
@@ -13,7 +13,7 @@ namespace TaskTrackerMAUI.ViewModels
 {
     public class KanbanViewModel : BaseViewModel
     {
-        private readonly IDataService _dataService;     
+        private readonly IDataService _dataService;
 
         public ObservableCollection<TaskItem> NewTasks { get; set; }
         public ObservableCollection<TaskItem> InProgressTasks { get; set; }
@@ -29,7 +29,8 @@ namespace TaskTrackerMAUI.ViewModels
 
         public ICommand NavigateToAddTaskCommand { get; }
         public ICommand NavigateToEditTaskCommand { get; }
-        public ICommand LoadTasksCommand { get; }     
+        public ICommand LoadTasksCommand { get; }
+        public ICommand NavigateToSettingsCommand { get; }    
 
         private bool _isBusy;
         public bool IsBusy
@@ -38,11 +39,18 @@ namespace TaskTrackerMAUI.ViewModels
             set => SetProperty(ref _isBusy, value);
         }
 
+        private string _pageTitle;          
+        public string Title       
+        {
+            get => _pageTitle;
+            set => SetProperty(ref _pageTitle, value);
+        }
+
         public KanbanViewModel(IDataService dataService)
         {
-            _dataService = dataService;   
+            _dataService = dataService;
 
-            Title = "Канбан-доска";    
+            Title = "Канбан-доска";   
             NewTasks = new ObservableCollection<TaskItem>();
             InProgressTasks = new ObservableCollection<TaskItem>();
             OnReviewTasks = new ObservableCollection<TaskItem>();
@@ -63,6 +71,10 @@ namespace TaskTrackerMAUI.ViewModels
 
             LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
 
+            NavigateToSettingsCommand = new Command(async () =>    
+            {
+                await Shell.Current.GoToAsync(nameof(Views.SettingsPage));
+            });
         }
 
         async Task ExecuteLoadTasksCommand()
@@ -110,7 +122,6 @@ namespace TaskTrackerMAUI.ViewModels
             }
         }
 
-
         public async Task MoveTaskAndSave(TaskItem taskToMove, TaskStatus newStatus)
         {
             if (taskToMove == null)
@@ -141,7 +152,7 @@ namespace TaskTrackerMAUI.ViewModels
 
             if (removedFromMemory)
             {
-                taskToMove.Status = newStatus;      
+                taskToMove.Status = newStatus;
                 taskToMove.ModifiedDate = DateTime.Now;
                 switch (newStatus)
                 {
@@ -154,7 +165,7 @@ namespace TaskTrackerMAUI.ViewModels
 
                 try
                 {
-                    await _dataService.SaveTaskAsync(taskToMove);         
+                    await _dataService.SaveTaskAsync(taskToMove);
                     Debug.WriteLine($"[DEBUG] MoveTaskAndSave: Task '{taskToMove.Title}' (ID: {taskToMove.Id}) saved to DB with new status {newStatus}.");
                 }
                 catch (Exception ex)
@@ -167,14 +178,6 @@ namespace TaskTrackerMAUI.ViewModels
                 Debug.WriteLine($"[WARNING] MoveTaskAndSave: FAILED to remove task from memory collection. DB save skipped.");
             }
             DraggedTask = null;
-        }
-
-
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
         }
     }
 }

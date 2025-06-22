@@ -8,33 +8,47 @@
              Title="{Binding Title}"
              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
 
-    <ScrollView Padding="15">
-        <VerticalStackLayout Spacing="15">
-            <Label Text="Название задачи" FontFamily="Bahnschrift"/>
-            <Entry Text="{Binding Task.Title}" Placeholder="Введите название" FontFamily="Bahnschrift"/>
+    <Grid>
+        <ScrollView Padding="15" IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Название задачи" FontFamily="Bahnschrift"/>
+                <Entry Text="{Binding Task.Title}" Placeholder="Введите название" FontFamily="Bahnschrift"/>
 
-            <Label Text="Описание" FontFamily="Bahnschrift"/>
-            <Editor Text="{Binding Task.Description}" Placeholder="Введите описание" AutoSize="TextChanges" HeightRequest="100" FontFamily="Bahnschrift"/>
+                <Label Text="Описание" FontFamily="Bahnschrift"/>
+                <Editor Text="{Binding Task.Description}" Placeholder="Введите описание" AutoSize="TextChanges" HeightRequest="100" FontFamily="Bahnschrift"/>
 
-            <Label Text="Срок выполнения" FontFamily="Bahnschrift"/>
-            <DatePicker Date="{Binding Task.DueDate, Mode=TwoWay}" FontFamily="Bahnschrift"/>
-            <Label Text="Приоритет" FontFamily="Bahnschrift"/>
-            <Picker ItemsSource="{Binding PriorityOptions}"
-                    SelectedItem="{Binding Task.Priority, Mode=TwoWay}"
-                    ItemDisplayBinding="{Binding .}"
-                    FontFamily="Bahnschrift"/>
+                <Label Text="Срок выполнения" FontFamily="Bahnschrift"/>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <DatePicker Grid.Column="0" Date="{Binding SelectedDate, Mode=TwoWay}" FontFamily="Bahnschrift"/>
+                    <TimePicker Grid.Column="1" Time="{Binding SelectedTime, Mode=TwoWay}" FontFamily="Bahnschrift" IsVisible="{Binding IsDateSelected}"/>
+                </Grid>
 
-            <Label Text="Категория" FontFamily="Bahnschrift"/>
-            <Entry Text="{Binding Task.Category}" Placeholder="Введите категорию" FontFamily="Bahnschrift"/>
+                <Button Text="Очистить дату" Command="{Binding ClearDueDateCommand}" HorizontalOptions="Start" FontSize="Small" Margin="0,5,0,0" IsVisible="{Binding IsDateSelected}"/>
+                
+                <Label Text="Приоритет" FontFamily="Bahnschrift"/>
+                <Picker ItemsSource="{Binding PriorityOptions}"
+                        SelectedItem="{Binding Task.Priority, Mode=TwoWay}"
+                        ItemDisplayBinding="{Binding .}"
+                        FontFamily="Bahnschrift"/>
 
-            <Label Text="Статус" FontFamily="Bahnschrift"/>
-            <Picker ItemsSource="{Binding StatusOptions}"
-                    SelectedItem="{Binding Task.Status, Mode=TwoWay}"
-                    ItemDisplayBinding="{Binding .}"
-                    FontFamily="Bahnschrift"/>
+                <Label Text="Категория" FontFamily="Bahnschrift"/>
+                <Entry Text="{Binding Task.Category}" Placeholder="Введите категорию" FontFamily="Bahnschrift"/>
 
-            <Button Text="Сохранить" Command="{Binding SaveTaskCommand}" HorizontalOptions="Fill" FontFamily="Bahnschrift" Margin="0,20,0,0"/>
-            <Button Text="Удалить" Command="{Binding DeleteTaskCommand}" HorizontalOptions="Fill" FontFamily="Bahnschrift" BackgroundColor="DarkRed" Margin="0,10,0,0" IsVisible="{Binding Task.Id, Converter={StaticResource IntToBoolConverterForVisibility}}" />
-        </VerticalStackLayout>
-    </ScrollView>
+                <Label Text="Статус" FontFamily="Bahnschrift"/>
+                <Picker ItemsSource="{Binding StatusOptions}"
+                        SelectedItem="{Binding Task.Status, Mode=TwoWay}"
+                        ItemDisplayBinding="{Binding .}"
+                        FontFamily="Bahnschrift"/>
+
+                <Button Text="Сохранить" Command="{Binding SaveTaskCommand}" HorizontalOptions="Fill" FontFamily="Bahnschrift" Margin="0,20,0,0"/>
+                <Button Text="Удалить" Command="{Binding DeleteTaskCommand}" HorizontalOptions="Fill" FontFamily="Bahnschrift" BackgroundColor="DarkRed" Margin="0,10,0,0" IsVisible="{Binding Task.Id, Converter={StaticResource IntToBoolConverterForVisibility}}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="{AppThemeBinding Light=Black, Dark=White}"/>
+    </Grid>
 </ContentPage>
