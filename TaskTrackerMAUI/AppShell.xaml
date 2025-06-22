@@ -12,4 +12,8 @@
         ContentTemplate="{DataTemplate views:KanbanPage}"
         Route="KanbanPage" />
 
+    <TabBar>
+        <ShellContent Route="TaskDetailPage" ContentTemplate="{DataTemplate views:TaskDetailPage}" />
+    </TabBar>
+
 </Shell>

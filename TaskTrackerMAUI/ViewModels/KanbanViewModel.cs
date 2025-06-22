@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using TaskTrackerMAUI.Models;
+using TaskTrackerMAUI.Services;   
 using System.Diagnostics;
-using TaskStatus = TaskTrackerMAUI.Models.TaskStatus;
+using Microsoft.Maui.Controls;
+using System.Linq;
+using System.Threading.Tasks;
+using TaskStatus = TaskTrackerMAUI.Models.TaskStatus;   
 
 namespace TaskTrackerMAUI.ViewModels
 {
     public class KanbanViewModel : BaseViewModel
     {
+        private readonly IDataService _dataService;     
+
         public ObservableCollection<TaskItem> NewTasks { get; set; }
         public ObservableCollection<TaskItem> InProgressTasks { get; set; }
         public ObservableCollection<TaskItem> OnReviewTasks { get; set; }
@@ -20,75 +27,154 @@ namespace TaskTrackerMAUI.ViewModels
             set => SetProperty(ref _draggedTask, value);
         }
 
-        public KanbanViewModel()
+        public ICommand NavigateToAddTaskCommand { get; }
+        public ICommand NavigateToEditTaskCommand { get; }
+        public ICommand LoadTasksCommand { get; }     
+
+        private bool _isBusy;
+        public bool IsBusy
         {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+
+        public KanbanViewModel(IDataService dataService)
+        {
+            _dataService = dataService;   
+
+            Title = "Канбан-доска";    
             NewTasks = new ObservableCollection<TaskItem>();
             InProgressTasks = new ObservableCollection<TaskItem>();
             OnReviewTasks = new ObservableCollection<TaskItem>();
             CompletedTasks = new ObservableCollection<TaskItem>();
-            LoadSampleTasks();
+
+            NavigateToAddTaskCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync($"{nameof(Views.TaskDetailPage)}?taskId=new");
+            });
+
+            NavigateToEditTaskCommand = new Command<TaskItem>(async (task) =>
+            {
+                if (task != null)
+                {
+                    await Shell.Current.GoToAsync($"{nameof(Views.TaskDetailPage)}?taskId={task.Id}");
+                }
+            });
+
+            LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
+
         }
 
-        void LoadSampleTasks()
+        async Task ExecuteLoadTasksCommand()
         {
-            NewTasks.Add(new TaskItem { Id = 1, Title = "Разработать главную страницу", Description = "Создать XAML и ViewModel для Канбан-доски.", Priority = Priority.High, Category = "Разработка", DueDate = DateTime.Now.AddDays(2), Status = TaskStatus.New });
-            NewTasks.Add(new TaskItem { Id = 2, Title = "Настроить шрифты", Description = "Добавить шрифт Bahnschrift.", Priority = Priority.Medium, Category = "UI/UX", DueDate = DateTime.Now.AddDays(1), Status = TaskStatus.New });
-            InProgressTasks.Add(new TaskItem { Id = 3, Title = "Создать модели данных", Description = "Определить классы TaskItem, Category, Priority.", Priority = Priority.High, Category = "Архитектура", Status = TaskStatus.InProgress, DueDate = DateTime.Now.AddDays(-1) });
-            OnReviewTasks.Add(new TaskItem { Id = 4, Title = "Продумать цветовую схему", Description = "Выбрать основные цвета для темной и светлой темы.", Priority = Priority.Medium, Category = "UI/UX", Status = TaskStatus.OnReview, DueDate = DateTime.Now.AddDays(3) });
-            CompletedTasks.Add(new TaskItem { Id = 5, Title = "Инициализировать проект", Description = "Создать новый .NET MAUI проект.", Priority = Priority.Low, Category = "Setup", Status = TaskStatus.Completed, DueDate = DateTime.Now.AddDays(-5) });
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+            Debug.WriteLine("[DEBUG] KanbanViewModel: Loading tasks from database...");
+
+            try
+            {
+                NewTasks.Clear();
+                InProgressTasks.Clear();
+                OnReviewTasks.Clear();
+                CompletedTasks.Clear();
+
+                var tasks = await _dataService.GetAllTasksAsync();
+                if (tasks != null && tasks.Any())
+                {
+                    foreach (var task in tasks)
+                    {
+                        switch (task.Status)
+                        {
+                            case TaskStatus.New: NewTasks.Add(task); break;
+                            case TaskStatus.InProgress: InProgressTasks.Add(task); break;
+                            case TaskStatus.OnReview: OnReviewTasks.Add(task); break;
+                            case TaskStatus.Completed: CompletedTasks.Add(task); break;
+                        }
+                    }
+                    Debug.WriteLine($"[DEBUG] KanbanViewModel: Loaded {tasks.Count} tasks.");
+                }
+                else
+                {
+                    Debug.WriteLine("[DEBUG] KanbanViewModel: No tasks found in database or database is empty.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[ERROR] KanbanViewModel: Failed to load tasks. {ex.Message}");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
-        public void MoveTask(TaskItem taskToMove, TaskStatus newStatus)
+
+        public async Task MoveTaskAndSave(TaskItem taskToMove, TaskStatus newStatus)
         {
             if (taskToMove == null)
             {
-                Debug.WriteLine("[ERROR] MoveTask: taskToMove is null. Operation cancelled.");
-                DraggedTask = null;    
+                Debug.WriteLine("[ERROR] MoveTaskAndSave: taskToMove is null.");
+                DraggedTask = null;
                 return;
             }
 
-            TaskStatus originalStatus = taskToMove.Status;       
-            Debug.WriteLine($"[DEBUG] MoveTask: Moving '{taskToMove.Title}' (ID: {taskToMove.Id}). Original Status: {originalStatus}, New Status: {newStatus}");
+            TaskStatus originalStatus = taskToMove.Status;
+            Debug.WriteLine($"[DEBUG] MoveTaskAndSave: Moving '{taskToMove.Title}' (ID: {taskToMove.Id}). Original: {originalStatus}, New: {newStatus}");
 
             if (originalStatus == newStatus)
             {
-                Debug.WriteLine($"[DEBUG] MoveTask: Task '{taskToMove.Title}' is already in the target status '{newStatus}'. No move needed.");
-                DraggedTask = null;        
+                Debug.WriteLine($"[DEBUG] MoveTaskAndSave: Task already in target status.");
+                DraggedTask = null;
                 return;
             }
 
-            bool removed = false;
+            bool removedFromMemory = false;
             switch (originalStatus)
             {
-                case TaskStatus.New: removed = NewTasks.Remove(taskToMove); break;
-                case TaskStatus.InProgress: removed = InProgressTasks.Remove(taskToMove); break;
-                case TaskStatus.OnReview: removed = OnReviewTasks.Remove(taskToMove); break;
-                case TaskStatus.Completed: removed = CompletedTasks.Remove(taskToMove); break;
-                default: Debug.WriteLine($"[WARNING] MoveTask: Unknown original status {originalStatus} for task '{taskToMove.Title}'."); break;
+                case TaskStatus.New: removedFromMemory = NewTasks.Remove(taskToMove); break;
+                case TaskStatus.InProgress: removedFromMemory = InProgressTasks.Remove(taskToMove); break;
+                case TaskStatus.OnReview: removedFromMemory = OnReviewTasks.Remove(taskToMove); break;
+                case TaskStatus.Completed: removedFromMemory = CompletedTasks.Remove(taskToMove); break;
             }
 
-            if (removed)
+            if (removedFromMemory)
             {
-                Debug.WriteLine($"[DEBUG] MoveTask: Successfully removed '{taskToMove.Title}' from collection for status {originalStatus}.");
+                taskToMove.Status = newStatus;      
+                taskToMove.ModifiedDate = DateTime.Now;
+                switch (newStatus)
+                {
+                    case TaskStatus.New: NewTasks.Add(taskToMove); break;
+                    case TaskStatus.InProgress: InProgressTasks.Add(taskToMove); break;
+                    case TaskStatus.OnReview: OnReviewTasks.Add(taskToMove); break;
+                    case TaskStatus.Completed: CompletedTasks.Add(taskToMove); break;
+                }
+                Debug.WriteLine($"[DEBUG] MoveTaskAndSave: Task moved in memory collections.");
+
+                try
+                {
+                    await _dataService.SaveTaskAsync(taskToMove);         
+                    Debug.WriteLine($"[DEBUG] MoveTaskAndSave: Task '{taskToMove.Title}' (ID: {taskToMove.Id}) saved to DB with new status {newStatus}.");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[ERROR] MoveTaskAndSave: Failed to save moved task to DB. {ex.Message}");
+                }
             }
             else
             {
-                Debug.WriteLine($"[WARNING] MoveTask: FAILED to remove '{taskToMove.Title}' from collection for status {originalStatus}. It might lead to duplicates if added to another list.");
+                Debug.WriteLine($"[WARNING] MoveTaskAndSave: FAILED to remove task from memory collection. DB save skipped.");
             }
+            DraggedTask = null;
+        }
 
-            taskToMove.Status = newStatus;     
-            taskToMove.ModifiedDate = DateTime.Now;
 
-            switch (newStatus)
-            {
-                case TaskStatus.New: if (!NewTasks.Contains(taskToMove)) NewTasks.Add(taskToMove); break;
-                case TaskStatus.InProgress: if (!InProgressTasks.Contains(taskToMove)) InProgressTasks.Add(taskToMove); break;
-                case TaskStatus.OnReview: if (!OnReviewTasks.Contains(taskToMove)) OnReviewTasks.Add(taskToMove); break;
-                case TaskStatus.Completed: if (!CompletedTasks.Contains(taskToMove)) CompletedTasks.Add(taskToMove); break;
-            }
-            Debug.WriteLine($"[DEBUG] MoveTask: Task '{taskToMove.Title}' added to collection for status {newStatus}. Collections counts: New={NewTasks.Count}, InProg={InProgressTasks.Count}, Review={OnReviewTasks.Count}, Done={CompletedTasks.Count}");
-
-            DraggedTask = null;       
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
         }
     }
 }

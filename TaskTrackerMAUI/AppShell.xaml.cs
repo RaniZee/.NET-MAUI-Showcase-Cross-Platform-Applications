@@ -1,10 +1,13 @@
-﻿namespace TaskTrackerMAUI
+﻿using TaskTrackerMAUI.Views;   
+
+namespace TaskTrackerMAUI;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        Routing.RegisterRoute(nameof(TaskDetailPage), typeof(TaskDetailPage));
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using TaskTrackerMAUI.ViewModels;
 using TaskTrackerMAUI.Views;
+using TaskTrackerMAUI.Services;    
+
 namespace TaskTrackerMAUI
 {
     public static class MauiProgram
@@ -17,15 +19,20 @@ namespace TaskTrackerMAUI
                     fonts.AddFont("bahnschrift.ttf", "Bahnschrift");
                 });
 
-            builder.Services.AddSingleton<KanbanViewModel>();       
+            builder.Services.AddSingleton<IDataService, SQLiteDataService>();    
 
-            builder.Services.AddSingleton<KanbanPage>();        
+            builder.Services.AddSingleton<KanbanViewModel>();
+            builder.Services.AddTransient<TaskDetailViewModel>();
+
+            builder.Services.AddSingleton<KanbanPage>();
+            builder.Services.AddTransient<TaskDetailPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+            var app = builder.Build();
 
-            return builder.Build();
+            return app;       
         }
     }
 }

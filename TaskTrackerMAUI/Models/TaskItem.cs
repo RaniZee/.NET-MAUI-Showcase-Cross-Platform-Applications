@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using SQLite;    
 
 namespace TaskTrackerMAUI.Models
 {
@@ -19,9 +20,11 @@ namespace TaskTrackerMAUI.Models
         Completed
     }
 
+    [Table("TaskItems")]    
     public class TaskItem : INotifyPropertyChanged
     {
         private int _id;
+        [PrimaryKey, AutoIncrement]     
         public int Id
         {
             get => _id;
@@ -56,7 +59,7 @@ namespace TaskTrackerMAUI.Models
             set => SetProperty(ref _priority, value);
         }
 
-        private string _category;         
+        private string _category;
         public string Category
         {
             get => _category;
@@ -88,8 +91,8 @@ namespace TaskTrackerMAUI.Models
         {
             CreatedDate = DateTime.Now;
             ModifiedDate = DateTime.Now;
-            Status = TaskStatus.New;    
-            Title = string.Empty;      
+            Status = TaskStatus.New;
+            Title = string.Empty;
             Description = string.Empty;
             Category = string.Empty;
         }
