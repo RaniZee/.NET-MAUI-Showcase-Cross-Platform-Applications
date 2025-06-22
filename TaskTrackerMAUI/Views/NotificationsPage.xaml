@@ -65,3 +65,5 @@
                            VerticalOptions="Center"
                            Color="{AppThemeBinding Light=Black, Dark=White}"/>
     </Grid>
+</ContentPage>
+<!-- <<< ЭТОТ ЗАКРЫВАЮЩИЙ ТЕГ, СКОРЕЕ ВСЕГО, ПРОПУЩЕН ИЛИ НЕПРАВИЛЬНО РАЗМЕЩЕН -->
