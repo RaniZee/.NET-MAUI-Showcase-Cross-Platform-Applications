@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskTrackerMAUI.ViewModels"
+             xmlns:models="clr-namespace:TaskTrackerMAUI.Models"
+             x:Class="TaskTrackerMAUI.Views.NotificationsPage"
+             x:DataType="viewmodels:NotificationsViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <Grid>
+        <CollectionView ItemsSource="{Binding PendingNotifications}"
+                        SelectionMode="None"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+            <CollectionView.EmptyView>
+                <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Нет запланированных напоминаний."
+                           HorizontalTextAlignment="Center"
+                           FontFamily="Bahnschrift"
+                           FontSize="Medium"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:TaskItem">
+                    <Frame Padding="10" Margin="10,5" CornerRadius="5" BorderColor="Gray" HasShadow="True">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" FontFamily="Bahnschrift"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Description}" FontSize="Small" MaxLines="2" LineBreakMode="TailTruncation" FontFamily="Bahnschrift"/>
+                            <Label Grid.Row="2" Grid.Column="0" FontSize="Small" FontFamily="Bahnschrift">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Напомнить: " FontAttributes="Bold"/>
+                                        <Span Text="{Binding ReminderDateTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label Grid.Row="3" Grid.Column="0" FontSize="Small" FontFamily="Bahnschrift" IsVisible="{Binding DueDate.HasValue}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Срок задачи: " FontAttributes="Bold"/>
+                                        <Span Text="{Binding DueDate, StringFormat='{0:dd.MM.yyyy HH:mm}'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <VerticalStackLayout Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                <Button Text="К задаче" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NotificationsViewModel}}, Path=NavigateToTaskDetailCommand}" 
+                                        CommandParameter="{Binding .}" 
+                                        FontSize="Micro" Padding="5"/>
+                                <Button Text="Отменить" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NotificationsViewModel}}, Path=CancelReminderCommand}" 
+                                        CommandParameter="{Binding .}" 
+                                        FontSize="Micro" Padding="5" BackgroundColor="DarkRed"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="{AppThemeBinding Light=Black, Dark=White}"/>
+    </Grid>

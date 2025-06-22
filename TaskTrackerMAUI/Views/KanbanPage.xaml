@@ -5,8 +5,10 @@
              xmlns:models="clr-namespace:TaskTrackerMAUI.Models"
              x:Class="TaskTrackerMAUI.Views.KanbanPage"
              Title="{Binding Title}">
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Создать Задачу" Command="{Binding NavigateToAddTaskCommand}" />
+        <ToolbarItem Text="Напоминания" Command="{Binding NavigateToNotificationsCommand}" />
         <ToolbarItem Text="Настройки" Command="{Binding NavigateToSettingsCommand}" />
     </ContentPage.ToolbarItems>
 

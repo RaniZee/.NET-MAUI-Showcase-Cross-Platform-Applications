@@ -30,7 +30,8 @@ namespace TaskTrackerMAUI.ViewModels
         public ICommand NavigateToAddTaskCommand { get; }
         public ICommand NavigateToEditTaskCommand { get; }
         public ICommand LoadTasksCommand { get; }
-        public ICommand NavigateToSettingsCommand { get; }    
+        public ICommand NavigateToSettingsCommand { get; }
+        public ICommand NavigateToNotificationsCommand { get; }   
 
         private bool _isBusy;
         public bool IsBusy
@@ -39,8 +40,8 @@ namespace TaskTrackerMAUI.ViewModels
             set => SetProperty(ref _isBusy, value);
         }
 
-        private string _pageTitle;          
-        public string Title       
+        private string _pageTitle;
+        public string Title
         {
             get => _pageTitle;
             set => SetProperty(ref _pageTitle, value);
@@ -50,7 +51,7 @@ namespace TaskTrackerMAUI.ViewModels
         {
             _dataService = dataService;
 
-            Title = "Канбан-доска";   
+            Title = "Канбан-доска";
             NewTasks = new ObservableCollection<TaskItem>();
             InProgressTasks = new ObservableCollection<TaskItem>();
             OnReviewTasks = new ObservableCollection<TaskItem>();
@@ -71,9 +72,14 @@ namespace TaskTrackerMAUI.ViewModels
 
             LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
 
-            NavigateToSettingsCommand = new Command(async () =>    
+            NavigateToSettingsCommand = new Command(async () =>
             {
                 await Shell.Current.GoToAsync(nameof(Views.SettingsPage));
+            });
+
+            NavigateToNotificationsCommand = new Command(async () =>     
+            {
+                await Shell.Current.GoToAsync(nameof(Views.NotificationsPage));
             });
         }
 

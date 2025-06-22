@@ -28,10 +28,12 @@ namespace TaskTrackerMAUI
             builder.Services.AddSingleton<KanbanViewModel>();
             builder.Services.AddTransient<TaskDetailViewModel>();
             builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<NotificationsViewModel>();
 
             builder.Services.AddSingleton<KanbanPage>();
             builder.Services.AddTransient<TaskDetailPage>();
             builder.Services.AddTransient<SettingsPage>();
+            builder.Services.AddTransient<NotificationsPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
