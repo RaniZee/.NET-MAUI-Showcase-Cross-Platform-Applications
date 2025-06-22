@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMauiApp.BmiCalculatorPage"
+             Title="Калькулятор ИМТ"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="AppFont"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="AppFont"/>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="FontFamily" Value="AppFont"/>
+        </Style>
+
+        <Style x:Key="GenderButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F0F0F0, Dark=#333333}"/>
+            <Setter Property="BorderColor" Value="Transparent"/>
+            <Setter Property="BorderWidth" Value="0"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark=White}"/>
+            <Setter Property="WidthRequest" Value="120"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+
+        <Style x:Key="SelectedGenderButtonStyle" TargetType="Button" BasedOn="{StaticResource GenderButtonStyle}">
+            <Setter Property="Background">
+                <LinearGradientBrush EndPoint="1,0">
+                    <GradientStop Color="#8E2DE2" Offset="0.1" />
+                    <GradientStop Color="#4A00E0" Offset="1.0" />
+                </LinearGradientBrush>
+            </Setter>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
+
+            <Label Text="Калькулятор ИМТ" FontSize="36" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <Frame Padding="0" CornerRadius="15" BorderColor="Transparent" HasShadow="True" BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2C2C2C}">
+                <VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Padding="20,15,20,10">
+                        <Label Text="Ваш рост (см)" VerticalOptions="Center" FontSize="18"/>
+                        <Entry Grid.Column="1" Text="{Binding HeightText, Mode=TwoWay}" Placeholder="175" Keyboard="Numeric" FontSize="18" WidthRequest="100" HorizontalTextAlignment="End" BackgroundColor="Transparent" />
+                    </Grid>
+                    <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#E0E0E0, Dark=#444444}" Margin="20,0"/>
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Padding="20,10,20,15">
+                        <Label Text="Ваш вес (кг)" VerticalOptions="Center" FontSize="18"/>
+                        <Entry Grid.Column="1" Text="{Binding WeightText, Mode=TwoWay}" Placeholder="70" Keyboard="Numeric" FontSize="18" WidthRequest="100" HorizontalTextAlignment="End" BackgroundColor="Transparent"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="15" CornerRadius="15" BorderColor="Transparent" HasShadow="True" BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2C2C2C}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Выберите пол" HorizontalOptions="Center" FontSize="18"/>
+                    <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                        <Button Text="Мужчина" Command="{Binding SelectGenderCommand}" CommandParameter="Male" Style="{StaticResource GenderButtonStyle}">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedGender}" Value="Male">
+                                    <Setter Property="Style" Value="{StaticResource SelectedGenderButtonStyle}"/>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Button Text="Женщина" Command="{Binding SelectGenderCommand}" CommandParameter="Female" Style="{StaticResource GenderButtonStyle}">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedGender}" Value="Female">
+                                    <Setter Property="Style" Value="{StaticResource SelectedGenderButtonStyle}"/>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Посмотреть историю" 
+                    Command="{Binding GoToHistoryCommand}" 
+                    HorizontalOptions="End" 
+                    FontSize="14"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}"
+                    Padding="10,0"
+                    Margin="0,-15,0,-10" />
+
+            <Button Text="Рассчитать ИМТ" Command="{Binding CalculateBmiCommand}" FontSize="22" HeightRequest="60" CornerRadius="30" HorizontalOptions="FillAndExpand" FontAttributes="Bold" TextColor="White">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#8E2DE2" Offset="0.1" />
+                        <GradientStop Color="#4A00E0" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+            <Frame x:Name="ResultFrame" IsVisible="{Binding IsResultVisible}" Padding="20" CornerRadius="15" BorderColor="Transparent" HasShadow="True" Background="{Binding BmiResultColor}" Opacity="0" Scale="0.8">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="{Binding BmiResult, StringFormat='Ваш ИМТ: {0:F1}'}" FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="{Binding BmiDescription}" FontSize="20" TextColor="White"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

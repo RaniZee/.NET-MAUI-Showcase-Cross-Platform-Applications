@@ -7,5 +7,6 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         Routing.RegisterRoute(nameof(NavigationDetailPage), typeof(NavigationDetailPage));
+        Routing.RegisterRoute(nameof(HistoryPage), typeof(HistoryPage));
     }
 }
