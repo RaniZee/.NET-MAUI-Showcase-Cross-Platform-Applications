@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TaskTrackerMAUI.ViewModels"
+             xmlns:models="clr-namespace:TaskTrackerMAUI.Models"
+             x:Class="TaskTrackerMAUI.Views.KanbanPage"
+             Title="Канбан-доска">
+
+    <Grid Padding="10" ColumnSpacing="10" RowDefinitions="Auto, *">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Text="Новые" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Bahnschrift"/>
+        <Label Grid.Row="0" Grid.Column="1" Text="В работе" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Bahnschrift"/>
+        <Label Grid.Row="0" Grid.Column="2" Text="На проверке" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Bahnschrift"/>
+        <Label Grid.Row="0" Grid.Column="3" Text="Завершенные" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="Bahnschrift"/>
+
+        <Border Grid.Row="1" Grid.Column="0" StrokeThickness="1" Stroke="LightGray" Padding="5" Margin="0,5,0,0" x:Name="NewTasksDropZone">
+            <Border.GestureRecognizers>
+                <DropGestureRecognizer AllowDrop="True" DragOver="DropGestureRecognizer_OnDragOver" DragLeave="DropGestureRecognizer_OnDragLeave" Drop="NewTasks_Drop"/>
+            </Border.GestureRecognizers>
+            <CollectionView ItemsSource="{Binding NewTasks}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TaskItem">
+                        <Frame Padding="10" Margin="5" CornerRadius="5" BorderColor="DimGray" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <DragGestureRecognizer CanDrag="True" DragStarting="DragGestureRecognizer_OnDragStarting"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Description}" FontSize="Small" MaxLines="2" LineBreakMode="TailTruncation" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding DueDate, StringFormat='Срок: {0:dd.MM.yyyy}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Priority, StringFormat='Приоритет: {0}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="1" StrokeThickness="1" Stroke="LightGray" Padding="5" Margin="0,5,0,0" x:Name="InProgressTasksDropZone">
+            <Border.GestureRecognizers>
+                <DropGestureRecognizer AllowDrop="True" DragOver="DropGestureRecognizer_OnDragOver" DragLeave="DropGestureRecognizer_OnDragLeave" Drop="InProgressTasks_Drop"/>
+            </Border.GestureRecognizers>
+            <CollectionView ItemsSource="{Binding InProgressTasks}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TaskItem">
+                        <Frame Padding="10" Margin="5" CornerRadius="5" BorderColor="DimGray" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <DragGestureRecognizer CanDrag="True" DragStarting="DragGestureRecognizer_OnDragStarting"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Description}" FontSize="Small" MaxLines="2" LineBreakMode="TailTruncation" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding DueDate, StringFormat='Срок: {0:dd.MM.yyyy}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Priority, StringFormat='Приоритет: {0}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" StrokeThickness="1" Stroke="LightGray" Padding="5" Margin="0,5,0,0" x:Name="OnReviewTasksDropZone">
+            <Border.GestureRecognizers>
+                <DropGestureRecognizer AllowDrop="True" DragOver="DropGestureRecognizer_OnDragOver" DragLeave="DropGestureRecognizer_OnDragLeave" Drop="OnReviewTasks_Drop"/>
+            </Border.GestureRecognizers>
+            <CollectionView ItemsSource="{Binding OnReviewTasks}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TaskItem">
+                        <Frame Padding="10" Margin="5" CornerRadius="5" BorderColor="DimGray" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <DragGestureRecognizer CanDrag="True" DragStarting="DragGestureRecognizer_OnDragStarting"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Description}" FontSize="Small" MaxLines="2" LineBreakMode="TailTruncation" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding DueDate, StringFormat='Срок: {0:dd.MM.yyyy}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Priority, StringFormat='Приоритет: {0}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="3" StrokeThickness="1" Stroke="LightGray" Padding="5" Margin="0,5,0,0" x:Name="CompletedTasksDropZone">
+            <Border.GestureRecognizers>
+                <DropGestureRecognizer AllowDrop="True" DragOver="DropGestureRecognizer_OnDragOver" DragLeave="DropGestureRecognizer_OnDragLeave" Drop="CompletedTasks_Drop"/>
+            </Border.GestureRecognizers>
+            <CollectionView ItemsSource="{Binding CompletedTasks}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TaskItem">
+                        <Frame Padding="10" Margin="5" CornerRadius="5" BorderColor="DimGray" HasShadow="True">
+                            <Frame.GestureRecognizers>
+                                <DragGestureRecognizer CanDrag="True" DragStarting="DragGestureRecognizer_OnDragStarting"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Description}" FontSize="Small" MaxLines="2" LineBreakMode="TailTruncation" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding DueDate, StringFormat='Срок: {0:dd.MM.yyyy}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                                <Label Text="{Binding Priority, StringFormat='Приоритет: {0}'}" FontSize="Micro" FontFamily="Bahnschrift"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+    </Grid>
+</ContentPage>

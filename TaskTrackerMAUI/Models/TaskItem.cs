@@ -1,0 +1,116 @@
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace TaskTrackerMAUI.Models
+{
+    public enum Priority
+    {
+        Low,
+        Medium,
+        High,
+        Critical
+    }
+
+    public enum TaskStatus
+    {
+        New,
+        InProgress,
+        OnReview,
+        Completed
+    }
+
+    public class TaskItem : INotifyPropertyChanged
+    {
+        private int _id;
+        public int Id
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
+        }
+
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value);
+        }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+
+        private DateTime? _dueDate;
+        public DateTime? DueDate
+        {
+            get => _dueDate;
+            set => SetProperty(ref _dueDate, value);
+        }
+
+        private Priority _priority;
+        public Priority Priority
+        {
+            get => _priority;
+            set => SetProperty(ref _priority, value);
+        }
+
+        private string _category;         
+        public string Category
+        {
+            get => _category;
+            set => SetProperty(ref _category, value);
+        }
+
+        private TaskStatus _status;
+        public TaskStatus Status
+        {
+            get => _status;
+            set => SetProperty(ref _status, value);
+        }
+
+        private DateTime _createdDate;
+        public DateTime CreatedDate
+        {
+            get => _createdDate;
+            set => SetProperty(ref _createdDate, value);
+        }
+
+        private DateTime _modifiedDate;
+        public DateTime ModifiedDate
+        {
+            get => _modifiedDate;
+            set => SetProperty(ref _modifiedDate, value);
+        }
+
+        public TaskItem()
+        {
+            CreatedDate = DateTime.Now;
+            ModifiedDate = DateTime.Now;
+            Status = TaskStatus.New;    
+            Title = string.Empty;      
+            Description = string.Empty;
+            Category = string.Empty;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetProperty<T>(ref T backingStore, T value,
+            [CallerMemberName] string propertyName = "",
+            Action onChanged = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
+
+            backingStore = value;
+            onChanged?.Invoke();
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+    }
+}
